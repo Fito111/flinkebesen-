@@ -1,10 +1,3 @@
-// Supabase initialisieren
-const { createClient } = Supabase;
-const supabaseClient = createClient(
-  'https://wvtqoffvvxegwjhwelfz.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2dHFvZmZ2dnhlZ3dqaHdlbGZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwOTc0MjksImV4cCI6MjA2MTY3MzQyOX0.R9gYE_Rw0rRpOiRfpvxoqRIbx6FAIQcGAfdiK-M3HUU'
-);
-
 // Smooth Scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
@@ -40,47 +33,22 @@ const observer = new IntersectionObserver((entries, observer) => {
 document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
 // Tastaturnavigation für Formular
-document.querySelectorAll('form input, form select, form textarea, form button').forEach(el => {
+document.querySelectorAll('form input, form textarea, form button').forEach(el => {
   el.addEventListener('keydown', e => {
     if (e.key === 'Enter' && el.tagName !== 'BUTTON') {
       e.preventDefault();
       const form = el.form;
-      const inputs = Array.from(form.querySelectorAll('input, select, textarea, button'));
+      const inputs = Array.from(form.querySelectorAll('input, textarea, button'));
       const next = inputs[inputs.indexOf(el) + 1];
       if (next) next.focus();
     }
   });
 });
 
-// Formular mit Supabase (inklusive Foto-Upload)
+// Formular mit Edge Function
 document.getElementById('contact-form').addEventListener('submit', async e => {
   e.preventDefault();
   const formData = new FormData(e.target);
-
-  let photoUrl = null;
-  const photoFile = formData.get('photo');
-  if (photoFile && photoFile.size > 0) {
-    const fileName = `${Date.now()}_${photoFile.name}`;
-    const { data: uploadData, error: uploadError } = await supabaseClient
-      .storage
-      .from('photos')
-      .upload(fileName, photoFile);
-
-    if (uploadError) {
-      alert('Fehler beim Hochladen des Fotos. Bitte versuche es später erneut.');
-      console.error('Upload Error:', uploadError);
-      return;
-    }
-
-    // Öffentliche URL des hochgeladenen Fotos
-    const { data: publicUrlData } = supabaseClient
-      .storage
-      .from('photos')
-      .getPublicUrl(fileName);
-
-    photoUrl = publicUrlData.publicUrl;
-  }
-
   const data = {
     service: formData.get('service'),
     name: formData.get('name'),
@@ -92,20 +60,34 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
     date: formData.get('date') || null,
     time: formData.get('time') || null,
     message: formData.get('message') || null,
-    photos: photoUrl, // Anpassung an die Spalte "photos"
-    privacy_accepted: formData.get('privacy_accepted') === 'on' // Anpassung an "privacy_accepted"
+    photo_url: null // Foto-Upload entfernt
   };
 
-  const { error } = await supabaseClient
-    .from('requests') // Tabelle "requests"
-    .insert([data]);
+  // Validierung der E-Mail und Telefonnummer
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\+?[\d\s-]{10,}$/;
+  if (!emailRegex.test(data.email)) {
+    alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+    return;
+  }
+  if (!phoneRegex.test(data.phone)) {
+    alert('Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).');
+    return;
+  }
 
-  if (error) {
-    alert('Fehler beim Abschicken des Formulars. Bitte versuche es später erneut.');
-    console.error('Insert Error:', error);
-  } else {
+  const response = await fetch('https://wvtqoffvvxegwjhwelfz.supabase.co/functions/v1/submit-contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  const result = await response.json();
+  if (response.ok) {
     alert('Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.');
     e.target.reset();
+  } else {
+    alert(`Fehler: ${result.error}`);
+    console.error(result.error);
   }
 });
 
