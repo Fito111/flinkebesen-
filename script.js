@@ -1,10 +1,23 @@
-// Smooth Scroll for anchor links
+// Supabase Configuration
+const SUPABASE_URL = 'https://wvtqoffvvxegwjhwelfz.supabase.co';
+const SUPABASE_API_KEY = 'YOUR_SUPABASE_API_KEY'; // Ersetze mit deinem API-Schlüssel
+
+// Error Logging Function
+function logError(message, error) {
+  console.error(`[FlinkeBesen] ${message}`, error);
+  // Optional: Sende an Monitoring-Dienst (z. B. Sentry)
+}
+
+// Smooth Scroll for Anchor Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
     e.preventDefault();
-    document.querySelector(anchor.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
-    });
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
   });
 });
 
@@ -20,15 +33,19 @@ document.querySelectorAll('.faq-question').forEach(btn => {
 });
 
 // Scroll Animations with Delay
+let debounceTimeout;
 const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const delay = entry.target.dataset.delay || 0;
-      entry.target.style.animationDelay = `${delay}ms`;
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        entry.target.style.animationDelay = `${delay}ms`;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, 100);
 }, { threshold: 0.1, rootMargin: '50px' });
 document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
@@ -53,12 +70,67 @@ if (form) {
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const formData = new FormData(form);
+
+    // Name Validation
     let name;
     if (formData.get('firstName') && formData.get('lastName')) {
+      if (!formData.get('firstName').trim() || !formData.get('lastName').trim()) {
+        const statusMessage = document.createElement('div');
+        statusMessage.setAttribute('aria-live', 'polite');
+        statusMessage.style.marginTop = '10px';
+        statusMessage.style.color = 'red';
+        statusMessage.textContent = 'Bitte geben Sie Vor- und Nachname ein.';
+        form.appendChild(statusMessage);
+        setTimeout(() => statusMessage.remove(), 5000);
+        return;
+      }
       name = `${formData.get('firstName')} ${formData.get('lastName')}`;
-    } else {
+    } else if (formData.get('name')) {
+      if (!formData.get('name').trim()) {
+        const statusMessage = document.createElement('div');
+        statusMessage.setAttribute('aria-live', 'polite');
+        statusMessage.style.marginTop = '10px';
+        statusMessage.style.color = 'red';
+        statusMessage.textContent = 'Bitte geben Sie Ihren Namen ein.';
+        form.appendChild(statusMessage);
+        setTimeout(() => statusMessage.remove(), 5000);
+        return;
+      }
       name = formData.get('name');
+    } else {
+      const statusMessage = document.createElement('div');
+      statusMessage.setAttribute('aria-live', 'polite');
+      statusMessage.style.marginTop = '10px';
+      statusMessage.style.color = 'red';
+      statusMessage.textContent = 'Name ist erforderlich.';
+      form.appendChild(statusMessage);
+      setTimeout(() => statusMessage.remove(), 5000);
+      return;
     }
+
+    // Handle Photo Upload
+    let photo_url = null;
+    if (formData.get('photos') && formData.get('photos').size > 0) {
+      const file = formData.get('photos');
+      const fileName = `${Date.now()}_${file.name}`;
+      try {
+        const uploadResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${SUPABASE_API_KEY}`
+          },
+          body: file
+        });
+        if (uploadResponse.ok) {
+          photo_url = `${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`;
+        } else {
+          logError('Photo upload failed:', uploadResponse.statusText);
+        }
+      } catch (error) {
+        logError('Photo upload error:', error);
+      }
+    }
+
     const data = {
       service: formData.get('service'),
       name: name,
@@ -70,63 +142,59 @@ if (form) {
       date: formData.get('date') || null,
       time: formData.get('time') || null,
       message: formData.get('message') || null,
-      photo_url: null // Photo upload not implemented
+      photo_url: photo_url
     };
 
-    // Validate email and phone
+    // Validate Email and Phone
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^\+?[\d\s-]{10,}$/;
+    const statusMessage = document.createElement('div');
+    statusMessage.setAttribute('aria-live', 'polite');
+    statusMessage.style.marginTop = '10px';
+    form.appendChild(statusMessage);
+
     if (!emailRegex.test(data.email)) {
-      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+      statusMessage.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      statusMessage.style.color = 'red';
+      setTimeout(() => statusMessage.remove(), 5000);
       return;
     }
     if (!phoneRegex.test(data.phone)) {
-      alert('Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).');
+      statusMessage.textContent = 'Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).';
+      statusMessage.style.color = 'red';
+      setTimeout(() => statusMessage.remove(), 5000);
       return;
     }
 
     try {
-      const response = await fetch('https://wvtqoffvvxegwjhwelfz.supabase.co/functions/v1/submit-contact', {
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/submit-contact`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_API_KEY}`
+        },
         body: JSON.stringify(data)
       });
 
       const result = await response.json();
       if (response.ok) {
-        alert('Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.');
+        statusMessage.textContent = 'Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.';
+        statusMessage.style.color = 'green';
         form.reset();
       } else {
-        alert(`Fehler: ${result.error || 'Unbekannter Fehler'}`);
-        console.error('Form submission error:', result.error);
+        statusMessage.textContent = `Fehler: ${result.error || 'Unbekannter Fehler'}`;
+        statusMessage.style.color = 'red';
+        logError('Form submission error:', result.error);
       }
     } catch (error) {
-      console.error('Network error during form submission:', error);
-      alert('Ein Netzwerkfehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      logError('Network error during form submission:', error);
+      statusMessage.textContent = 'Ein Netzwerkfehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+      statusMessage.style.color = 'red';
     }
-  });
-}
 
-// Cookie Banner
-const cookieBanner = document.getElementById('cookie-banner');
-if (cookieBanner) {
-  if (!localStorage.getItem('cookieConsent')) {
-    cookieBanner.style.display = 'flex';
-  }
-  const acceptCookies = document.getElementById('accept-cookies');
-  const declineCookies = document.getElementById('decline-cookies');
-  if (acceptCookies) {
-    acceptCookies.addEventListener('click', () => {
-      localStorage.setItem('cookieConsent', 'accepted');
-      cookieBanner.style.display = 'none';
-    });
-  }
-  if (declineCookies) {
-    declineCookies.addEventListener('click', () => {
-      localStorage.setItem('cookieConsent', 'declined');
-      cookieBanner.style.display = 'none';
-    });
-  }
+    // Remove Status Message after 5 seconds
+    setTimeout(() => statusMessage.remove(), 5000);
+  });
 }
 
 // Slideshow
@@ -136,6 +204,8 @@ if (slideshowContainer) {
   if (slides.length > 0) {
     let currentSlide = 0;
     let isSwiping = false;
+    let isDragging = false;
+    let slideInterval = setInterval(nextSlide, 6000);
 
     function showSlide(index) {
       slides.forEach((slide, i) => {
@@ -148,29 +218,55 @@ if (slideshowContainer) {
       showSlide(currentSlide);
     }
 
-    // Automatic slide change every 6 seconds
-    setInterval(nextSlide, 6000);
+    // Add ARIA label for accessibility
+    slideshowContainer.setAttribute('aria-label', 'Bild-Slideshow');
 
-    // Touch-Swipe for mobile devices
+    // Touch-Swipe for Mobile Devices
     let touchStartX = 0;
     let touchEndX = 0;
     slideshowContainer.addEventListener('touchstart', e => {
+      clearInterval(slideInterval);
       touchStartX = e.changedTouches[0].screenX;
     });
     slideshowContainer.addEventListener('touchend', e => {
       if (isSwiping) return;
       isSwiping = true;
       touchEndX = e.changedTouches[0].screenX;
-      if (touchStartX - touchEndX > 50) {
+      if (touchStartX - touchEndX > 75) {
         nextSlide();
-      } else if (touchEndX - touchStartX > 50) {
+      } else if (touchEndX - touchStartX > 75) {
         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         showSlide(currentSlide);
       }
+      slideInterval = setInterval(nextSlide, 6000);
       setTimeout(() => { isSwiping = false; }, 300);
     });
 
-    // Initial slide
+    // Mouse-Drag for Desktop
+    let startX = 0;
+    slideshowContainer.addEventListener('mousedown', e => {
+      clearInterval(slideInterval);
+      isDragging = true;
+      startX = e.pageX;
+    });
+    slideshowContainer.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const endX = e.pageX;
+      if (startX - endX > 75) {
+        nextSlide();
+      } else if (endX - startX > 75) {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+      slideInterval = setInterval(nextSlide, 6000);
+    });
+    slideshowContainer.addEventListener('mouseleave', () => {
+      isDragging = false;
+      slideInterval = setInterval(nextSlide, 6000);
+    });
+
+    // Initial Slide
     showSlide(currentSlide);
   }
 }
