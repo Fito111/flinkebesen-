@@ -1,4 +1,4 @@
-// Smooth Scroll
+// Smooth Scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
     e.preventDefault();
@@ -8,7 +8,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// FAQ Akkordeon
+// FAQ Accordion
 document.querySelectorAll('.faq-question').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.parentElement;
@@ -19,7 +19,7 @@ document.querySelectorAll('.faq-question').forEach(btn => {
   });
 });
 
-// Scroll-Animationen mit Delay
+// Scroll Animations with Delay
 const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -32,117 +32,145 @@ const observer = new IntersectionObserver((entries, observer) => {
 }, { threshold: 0.1, rootMargin: '50px' });
 document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
-// Tastaturnavigation für Formular
-document.querySelectorAll('form input, form textarea, form button').forEach(el => {
+// Keyboard Navigation for Forms
+document.querySelectorAll('form input, form textarea, form select, form button').forEach(el => {
   el.addEventListener('keydown', e => {
     if (e.key === 'Enter' && el.tagName !== 'BUTTON') {
       e.preventDefault();
       const form = el.form;
-      const inputs = Array.from(form.querySelectorAll('input, textarea, button'));
+      const inputs = Array.from(form.querySelectorAll('input, textarea, select, button'));
       const next = inputs[inputs.indexOf(el) + 1];
       if (next) next.focus();
     }
   });
 });
 
-// Formular mit Edge Function
-document.getElementById('contact-form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const data = {
-    service: formData.get('service'),
-    name: formData.get('name'),
-    email: formData.get('email'),
-    phone: formData.get('phone'),
-    street: formData.get('street') || null,
-    zip: formData.get('zip') || null,
-    city: formData.get('city') || null,
-    date: formData.get('date') || null,
-    time: formData.get('time') || null,
-    message: formData.get('message') || null,
-    photo_url: null // Foto-Upload entfernt
-  };
+// Form Submission with Supabase Edge Function
+const contactForm = document.getElementById('contact-form');
+const serviceForm = document.getElementById('service-form');
+const form = contactForm || serviceForm;
+if (form) {
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    let name;
+    if (formData.get('firstName') && formData.get('lastName')) {
+      name = `${formData.get('firstName')} ${formData.get('lastName')}`;
+    } else {
+      name = formData.get('name');
+    }
+    const data = {
+      service: formData.get('service'),
+      name: name,
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      street: formData.get('street') || null,
+      zip: formData.get('zip') || null,
+      city: formData.get('city') || null,
+      date: formData.get('date') || null,
+      time: formData.get('time') || null,
+      message: formData.get('message') || null,
+      photo_url: null // Photo upload not implemented
+    };
 
-  // Validierung der E-Mail und Telefonnummer
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^\+?[\d\s-]{10,}$/;
-  if (!emailRegex.test(data.email)) {
-    alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
-    return;
-  }
-  if (!phoneRegex.test(data.phone)) {
-    alert('Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).');
-    return;
-  }
+    // Validate email and phone
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?[\d\s-]{10,}$/;
+    if (!emailRegex.test(data.email)) {
+      alert('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+      return;
+    }
+    if (!phoneRegex.test(data.phone)) {
+      alert('Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).');
+      return;
+    }
 
-  const response = await fetch('https://wvtqoffvvxegwjhwelfz.supabase.co/functions/v1/submit-contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
+    try {
+      const response = await fetch('https://wvtqoffvvxegwjhwelfz.supabase.co/functions/v1/submit-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert('Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.');
+        form.reset();
+      } else {
+        alert(`Fehler: ${result.error || 'Unbekannter Fehler'}`);
+        console.error('Form submission error:', result.error);
+      }
+    } catch (error) {
+      console.error('Network error during form submission:', error);
+      alert('Ein Netzwerkfehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+    }
   });
-
-  const result = await response.json();
-  if (response.ok) {
-    alert('Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.');
-    e.target.reset();
-  } else {
-    alert(`Fehler: ${result.error}`);
-    console.error(result.error);
-  }
-});
+}
 
 // Cookie Banner
 const cookieBanner = document.getElementById('cookie-banner');
-const acceptCookies = document.getElementById('accept-cookies');
-const declineCookies = document.getElementById('decline-cookies');
-
 if (cookieBanner) {
   if (!localStorage.getItem('cookieConsent')) {
     cookieBanner.style.display = 'flex';
   }
-  acceptCookies.addEventListener('click', () => {
-    localStorage.setItem('cookieConsent', 'accepted');
-    cookieBanner.style.display = 'none';
-  });
-  declineCookies.addEventListener('click', () => {
-    localStorage.setItem('cookieConsent', 'declined');
-    cookieBanner.style.display = 'none';
-  });
+  const acceptCookies = document.getElementById('accept-cookies');
+  const declineCookies = document.getElementById('decline-cookies');
+  if (acceptCookies) {
+    acceptCookies.addEventListener('click', () => {
+      localStorage.setItem('cookieConsent', 'accepted');
+      cookieBanner.style.display = 'none';
+    });
+  }
+  if (declineCookies) {
+    declineCookies.addEventListener('click', () => {
+      localStorage.setItem('cookieConsent', 'declined');
+      cookieBanner.style.display = 'none';
+    });
+  }
 }
 
 // Slideshow
-const slides = document.querySelectorAll('.slide');
-let currentSlide = 0;
+const slideshowContainer = document.querySelector('.slideshow-container');
+if (slideshowContainer) {
+  const slides = document.querySelectorAll('.slide');
+  if (slides.length > 0) {
+    let currentSlide = 0;
+    let isSwiping = false;
 
-function showSlide(index) {
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('active', i === index);
-  });
-}
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
 
-function nextSlide() {
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
 
-// Automatischer Wechsel alle 6 Sekunden
-setInterval(nextSlide, 6000);
+    // Automatic slide change every 6 seconds
+    setInterval(nextSlide, 6000);
 
-// Touch-Swipe für Mobilgeräte
-let touchStartX = 0;
-let touchEndX = 0;
-document.querySelector('.slideshow-container').addEventListener('touchstart', e => {
-  touchStartX = e.changedTouches[0].screenX;
-});
-document.querySelector('.slideshow-container').addEventListener('touchend', e => {
-  touchEndX = e.changedTouches[0].screenX;
-  if (touchStartX - touchEndX > 50) {
-    nextSlide();
-  } else if (touchEndX - touchStartX > 50) {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    // Touch-Swipe for mobile devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+    slideshowContainer.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    slideshowContainer.addEventListener('touchend', e => {
+      if (isSwiping) return;
+      isSwiping = true;
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) {
+        nextSlide();
+      } else if (touchEndX - touchStartX > 50) {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+      setTimeout(() => { isSwiping = false; }, 300);
+    });
+
+    // Initial slide
     showSlide(currentSlide);
   }
-});
-
-// Initialer Slide
-showSlide(currentSlide);
+}
