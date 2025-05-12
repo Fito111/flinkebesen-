@@ -1,1 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professionelle Büroreinigung in Wiernsheim (PLZ 75446). Saubere Büros für produktive Teams. Jetzt Angebot anfordern!">
+    <title>Büroreinigung Wiernsheim - Flinke Besen</title>
+    <link rel="stylesheet" href="dienstleistungen.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span class="logo-text">FB</span>
+            <a href="mailto:info@flinkebesen.de" class="email-link">info@flinkebesen.de</a>
+        </div>
+        <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen/schließen">
+        <label for="menu-toggle" class="burger-icon" tabindex="0">☰</label>
+        <nav id="nav-menu" aria-labelledby="menu-toggle">
+            <a href="../index.html">Home</a>
+            <a href="haushaltsreinigung.html">Haushaltsreinigung</a>
+            <a href="bueroreinigung.html">Büroreinigung</a>
+            <a href="fensterreinigung.html">Fensterreinigung</a>
+            <a href="umzugsreinigung.html">Umzugsreinigung</a>
+            <a href="grundreinigung.html">Grundreinigung</a>
+            <a href="teppichreinigung.html">Teppichreinigung</a>
+            <a href="bauendreinigung.html">Bauendreinigung</a>
+            <a href="praxisreinigung.html">Praxisreinigung</a>
+            <a href="../rechtliches/datenschutz.html">Datenschutz</a>
+            <a href="../rechtliches/impressum.html">Impressum</a>
+        </nav>
+    </header>
 
+    <a href="#contact" class="sticky-cta" aria-label="Kostenloses Angebot anfordern">
+        <i class="fas fa-envelope"></i> Angebot anfordern
+    </a>
+
+    <section id="intro">
+        <div class="intro-image">
+            <img src="https://images.pexels.com/photos/4164059/pexels-photo-4164059.jpeg?auto=compress&cs=tinysrgb&w=1200" 
+                 alt="Sauberes Büro Wiernsheim" class="animate" loading="lazy">
+            <div class="intro-text">
+                <h1 class="animate">Büroreinigung Wiernsheim</h1>
+                <p class="animate">Saubere Büros für produktive Teams</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="description">
+        <h2 class="animate">Makellose Ergebnisse mit Flinke Besen</h2>
+        <p class="animate">Wir sorgen für ein sauberes Büro in Wiernsheim. Unser Team bietet gründliche Büroreinigung mit umweltfreundlichen, biologisch abbaubaren Mitteln. Mit über 10 Jahren Erfahrung garantieren wir makellose Ergebnisse, flexibel nach Ihren Wünschen.</p>
+    </section>
+
+    <section id="contact">
+        <h2 class="animate">Kontaktieren Sie uns in Wiernsheim</h2>
+        <p class="animate">Fordern Sie ein kostenloses Angebot für Wiernsheim und Umgebung an.</p>
+        <form class="animate contact-form" id="service-form" role="form">
+            <div class="form-group">
+                <select name="service" aria-label="Dienstleistung" required disabled>
+                    <option value="bueroreinigung" selected>Büroreinigung</option>
+                </select>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <input type="text" name="firstName" placeholder="Vorname *" aria-label="Vorname" required>
+                <span class="error-message"></span>
+                <input type="text" name="lastName" placeholder="Nachname *" aria-label="Nachname" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <input type="tel" name="phone" placeholder="Telefonnummer *" aria-label="Telefonnummer" required>
+                <span class="error-message"></span>
+                <input type="email" name="email" placeholder="E-Mail *" aria-label="E-Mail" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <input type="text" name="street" placeholder="Straße *" aria-label="Straße" required>
+                <span class="error-message"></span>
+                <input type="text" name="zip" placeholder="PLZ *" aria-label="PLZ" required>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <input type="text" name="city" placeholder="Ort *" aria-label="Ort" required>
+                <span class="error-message"></span>
+                <div class="input-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                    <input type="date" name="date" placeholder="Datum *" aria-label="Datum" required>
+                </div>
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <select name="time" aria-label="Uhrzeit" required>
+                    <option value="" disabled selected>Uhrzeit wählen *</option>
+                    <option value="08:00-10:00">08:00-10:00</option>
+                    <option value="10:00-12:00">10:00-12:00</option>
+                    <option value="12:00-14:00">12:00-14:00</option>
+                    <option value="14:00-16:00">14:00-16:00</option>
+                    <option value="16:00-18:00">16:00-18:00</option>
+                    <option value="18:00-20:00">18:00-20:00</option>
+                    <option value="20:00-22:00">20:00-22:00</option>
+                    <option value="22:00-24:00">22:00-24:00</option>
+                </select>
+                <span class="error-message"></span>
+                <input type="file" name="photos" accept="image/*" placeholder="Fotos (optional)" aria-label="Fotos hochladen">
+                <span class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <textarea name="message" placeholder="Ihre Nachricht (optional)" aria-label="Nachricht"></textarea>
+                <span class="error-message"></span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 5px; max-width: 300px; margin: 0 auto;">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="privacy" checked required>
+                </label>
+                <span style="font-size: 14px; color: #6B7280;">
+                    Ich stimme den <a href="../rechtliches/datenschutz.html" style="color: #0056D2; text-decoration: underline;">Datenschutzbedingungen</a> zu.
+                </span>
+            </div>
+            <button type="submit" class="contact-btn">Angebot anfordern</button>
+        </form>
+    </section>
+
+    <section id="faq">
+        <h2 class="animate">Häufige Fragen</h2>
+        <div class="faq-container">
+            <div class="faq-item animate">
+                <button class="faq-question" aria-expanded="false">Welche Dienstleistungen bieten Sie an?</button>
+                <div class="faq-answer">Wir bieten Haushaltsreinigung, Büroreinigung, Treppenhausreinigung, Fensterreinigung, Grundreinigung, Unterhaltsreinigung, Bauendreinigung, Praxisreinigung und Teppichreinigung.</div>
+            </div>
+            <div class="faq-item animate">
+                <button class="faq-question" aria-expanded="false">Nutzen Sie umweltfreundliche Mittel?</button>
+                <div class="faq-answer">Ja, wir verwenden ausschließlich biologisch abbaubare Reinigungsmittel, frei von schädlichen Chemikalien.</div>
+            </div>
+            <div class="faq-item animate">
+                <button class="faq-question" aria-expanded="false">Muss ich bei der Reinigung anwesend sein?</button>
+                <div class="faq-answer">Nein, viele Kunden übergeben uns einen Schlüssel oder sorgen anderweitig für Zugang.</div>
+            </div>
+            <div class="faq-item animate">
+                <button class="faq-question" aria-expanded="false">Was ist eine Grundreinigung?</button>
+                <div class="faq-answer">Intensive Reinigung von Ecken, Türrahmen, Heizkörpern und hinter Möbeln – ideal als Frühjahrsputz.</div>
+            </div>
+            <div class="faq-item animate">
+                <button class="faq-question" aria-expanded="false">Bieten Sie flexible Zeiten an?</button>
+                <div class="faq-answer">Ja, wir bieten flexible Zeiten, z. B. früh morgens oder am Wochenende.</div>
+            </div>
+            <div class="faq-item animate">
+                <button class="faq-question" aria-expanded="false">Muss ich Reinigungsmittel bereitstellen?</button>
+                <div class="faq-answer">Nein, wir bringen umweltfreundliche Mittel und professionelles Equipment mit.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="usps">
+        <h2 class="animate">Warum Flinke Besen?</h2>
+        <div class="usps-list">
+            <div class="usp-item animate" data-delay="0">
+                <i class="fas fa-leaf"></i>
+                <h3>Umweltfreundlich</h3>
+                <p>Wir nutzen biologisch abbaubare Reinigungsmittel.</p>
+            </div>
+            <div class="usp-item animate" data-delay="100">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Professionell</h3>
+                <p>Geschultes Team mit über 10 Jahren Erfahrung.</p>
+            </div>
+            <div class="usp-item animate" data-delay="200">
+                <i class="fas fa-clock"></i>
+                <h3>Flexibel</h3>
+                <p>Reinigung zu Ihren Wunschzeiten, auch kurzfristig.</p>
+            </div>
+            <div class="usp-item animate" data-delay="300">
+                <i class="fas fa-euro-sign"></i>
+                <h3>Fair</h3>
+                <p>Transparente Preise ohne versteckte Kosten.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <h2 class="animate">Unsere Dienstleistungen</h2>
+        <div class="services-list">
+            <a href="haushaltsreinigung.html" class="service-card animate" data-delay="0">
+                <i class="fas fa-home"></i>
+                <img src="https://images.pexels.com/photos/4107286/pexels-photo-4107286.jpeg" alt="Haushaltsreinigung Wiernsheim" loading="lazy">
+                <h3>Haushaltsreinigung</h3>
+                <p>Gründliche Reinigung für Ihr Zuhause.</p>
+            </a>
+            <a href="fensterreinigung.html" class="service-card animate" data-delay="100">
+                <i class="fas fa-window-maximize"></i>
+                <img src="https://images.pexels.com/photos/6197129/pexels-photo-6197129.jpeg" alt="Fensterreinigung Wiernsheim" loading="lazy">
+                <h3>Fensterreinigung</h3>
+                <p>Streifenfreie Fenster, innen & außen.</p>
+            </a>
+            <a href="umzugsreinigung.html" class="service-card animate" data-delay="200">
+                <i class="fas fa-truck-moving"></i>
+                <img src="https://images.pexels.com/photos/4246119/pexels-photo-4246119.jpeg" alt="Umzugsreinigung Wiernsheim" loading="lazy">
+                <h3>Umzugsreinigung</h3>
+                <p>Endreinigung für Ihren Umzug.</p>
+            </a>
+            <a href="grundreinigung.html" class="service-card animate" data-delay="300">
+                <i class="fas fa-scrubber"></i>
+                <img src="https://images.pexels.com/photos/4239069/pexels-photo-4239069.jpeg" alt="Grundreinigung Wiernsheim" loading="lazy">
+                <h3>Grundreinigung</h3>
+                <p>Intensive Reinigung für alle Flächen.</p>
+            </a>
+            <a href="teppichreinigung.html" class="service-card animate" data-delay="400">
+                <i class="fas fa-rug"></i>
+                <img src="https://images.pexels.com/photos/6297086/pexels-photo-6297086.jpeg" alt="Teppichreinigung Wiernsheim" loading="lazy">
+                <h3>Teppichreinigung</h3>
+                <p>Professionelle Pflege für Ihre Teppiche.</p>
+            </a>
+            <a href="bauendreinigung.html" class="service-card animate" data-delay="500">
+                <i class="fas fa-hard-hat"></i>
+                <img src="https://images.pexels.com/photos/4791477/pexels-photo-4791477.jpeg" alt="Bauendreinigung Wiernsheim" loading="lazy">
+                <h3>Bauendreinigung</h3>
+                <p>Sauberkeit nach Bauprojekten.</p>
+            </a>
+            <a href="praxisreinigung.html" class="service-card animate" data-delay="600">
+                <i class="fas fa-stethoscope"></i>
+                <img src="https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg" alt="Praxisreinigung Wiernsheim" loading="lazy">
+                <h3>Praxisreinigung</h3>
+                <p>Hygienische Reinigung für Praxen.</p>
+            </a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="animate">Über Flinke Besen</h2>
+        <p class="animate">Wir sind Ihr Partner für Sauberkeit in Wiernsheim und Umgebung. Mit Leidenschaft und Präzision sorgen wir für makellose Ergebnisse.</p>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Kontakt</h4>
+                <p>Telefon: <a href="tel:+4917623852087">+49 176 23852087</a><br>
+                   E-Mail: <a href="mailto:info@flinkebesen.de">info@flinkebesen.de</a><br>
+                   Wiernsheim (PLZ 75446)</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="mailto:info@flinkebesen.de" aria-label="E-Mail"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+4917623852087" aria-label="Telefon"><i class="fas fa-phone"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Dienstleistungen</h4>
+                <ul>
+                    <li><a href="haushaltsreinigung.html">Haushaltsreinigung</a></li>
+                    <li><a href="bueroreinigung.html">Büroreinigung</a></li>
+                    <li><a href="fensterreinigung.html">Fensterreinigung</a></li>
+                    <li><a href="umzugsreinigung.html">Umzugsreinigung</a></li>
+                    <li><a href="grundreinigung.html">Grundreinigung</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="../rechtliches/impressum.html">Impressum</a>
+            <a href="../rechtliches/datenschutz.html">Datenschutz</a>
+        </div>
+        <p>© 2025 Flinke Besen. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
