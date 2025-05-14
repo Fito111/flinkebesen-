@@ -9,6 +9,7 @@ function logError(message, error) {
 }
 
 // Prevent Horizontal Scrolling
+let touchStartX, touchStartY;
 document.addEventListener('touchstart', e => {
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
@@ -35,6 +36,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       target.scrollIntoView({
         behavior: 'smooth'
       });
+      // Close mobile menu after clicking a link
+      const menuToggle = document.getElementById('menu-toggle');
+      if (menuToggle.checked) {
+        menuToggle.checked = false;
+      }
     } else {
       console.warn(`[FlinkeBesen] Anchor target not found: ${anchor.getAttribute('href')}`);
     }
@@ -65,7 +71,7 @@ const observer = new IntersectionObserver((entries, observer) => {
         observer.unobserve(entry.target);
       }
     });
-  }, 50); // Reduced from 100ms for smoother performance
+  }, 50);
 }, { threshold: 0.1, rootMargin: '50px' });
 document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
@@ -84,100 +90,28 @@ document.querySelectorAll('form input, form textarea, form select, form button')
 
 // Form Submission with Supabase Edge Function
 const contactForm = document.getElementById('contact-form');
-const serviceForm = document.getElementById('service-form');
-const form = contactForm || serviceForm;
-if (form) {
-  form.addEventListener('submit', async e => {
+if (contactForm) {
+  contactForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const formData = new FormData(form);
+    const formData = new FormData(contactForm);
 
     // Name Validation
-    let name;
-    if (formData.get('firstName') && formData.get('lastName')) {
-      if (!formData.get('firstName').trim() || !formData.get('lastName').trim()) {
-        const statusMessage = document.createElement('div');
-        statusMessage.setAttribute('aria-live', 'polite');
-        statusMessage.classList.add('status-message', 'error');
-        statusMessage.textContent = 'Bitte geben Sie Vor- und Nachname ein.';
-        form.appendChild(statusMessage);
-        setTimeout(() => statusMessage.remove(), 5000);
-        return;
-      }
-      name = `${formData.get('firstName')} ${formData.get('lastName')}`;
-    } else if (formData.get('name')) {
-      if (!formData.get('name').trim()) {
-        const statusMessage = document.createElement('div');
-        statusMessage.setAttribute('aria-live', 'polite');
-        statusMessage.classList.add('status-message', 'error');
-        statusMessage.textContent = 'Bitte geben Sie Ihren Namen ein.';
-        form.appendChild(statusMessage);
-        setTimeout(() => statusMessage.remove(), 5000);
-        return;
-      }
-      name = formData.get('name');
-    } else {
+    const name = formData.get('name');
+    if (!name.trim()) {
       const statusMessage = document.createElement('div');
       statusMessage.setAttribute('aria-live', 'polite');
       statusMessage.classList.add('status-message', 'error');
-      statusMessage.textContent = 'Name ist erforderlich.';
-      form.appendChild(statusMessage);
+      statusMessage.textContent = 'Bitte geben Sie Ihren Namen ein.';
+      contactForm.appendChild(statusMessage);
       setTimeout(() => statusMessage.remove(), 5000);
       return;
     }
 
-    // Handle Photo Upload
-    let photo_url = null;
-    if (formData.get('photos') && formData.get('photos').size > 0) {
-      const file = formData.get('photos');
-      if (file.size > 5 * 1024 * 1024) {
-        const statusMessage = document.createElement('div');
-        statusMessage.setAttribute('aria-live', 'polite');
-        statusMessage.classList.add('status-message', 'error');
-        statusMessage.textContent = 'Datei ist zu groß (max. 5MB).';
-        form.appendChild(statusMessage);
-        setTimeout(() => statusMessage.remove(), 5000);
-        return;
-      }
-      if (!['image/jpeg', 'image/png'].includes(file.type)) {
-        const statusMessage = document.createElement('div');
-        statusMessage.setAttribute('aria-live', 'polite');
-        statusMessage.classList.add('status-message', 'error');
-        statusMessage.textContent = 'Nur JPEG- oder PNG-Dateien sind erlaubt.';
-        form.appendChild(statusMessage);
-        setTimeout(() => statusMessage.remove(), 5000);
-        return;
-      }
-      const fileName = `${Date.now()}_${file.name}`;
-      try {
-        const uploadResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_API_KEY}`
-          },
-          body: file
-        });
-        if (uploadResponse.ok) {
-          photo_url = `${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`;
-        } else {
-          logError('Photo upload failed:', uploadResponse.statusText);
-        }
-      } catch (error) {
-        logError('Photo upload error:', error);
-      }
-    }
-
     const data = {
-      service: formData.get('service'),
       name: name,
       email: formData.get('email'),
       phone: formData.get('phone'),
-      street: formData.get('street') || null,
-      zip: formData.get('zip') || null,
-      city: formData.get('city') || null,
-      date: formData.get('date') || null,
-      time: formData.get('time') || null,
-      message: formData.get('message') || null,
-      photo_url: photo_url
+      message: formData.get('message') || null
     };
 
     // Validate Email and Phone
@@ -186,7 +120,7 @@ if (form) {
     const statusMessage = document.createElement('div');
     statusMessage.setAttribute('aria-live', 'polite');
     statusMessage.classList.add('status-message');
-    form.appendChild(statusMessage);
+    contactForm.appendChild(statusMessage);
 
     if (!emailRegex.test(data.email)) {
       statusMessage.classList.add('error');
@@ -215,7 +149,7 @@ if (form) {
       if (response.ok) {
         statusMessage.classList.add('success');
         statusMessage.textContent = 'Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.';
-        form.reset();
+        contactForm.reset();
       } else {
         statusMessage.classList.add('error');
         statusMessage.textContent = `Fehler: ${result.error || 'Unbekannter Fehler'}`;
@@ -250,9 +184,6 @@ if (slideshowContainer) {
       currentSlide = (currentSlide + 1) % slides.length;
       showSlide(currentSlide);
     }
-
-    // Add ARIA label for accessibility
-    slideshowContainer.setAttribute('aria-label', 'Bild-Slideshow');
 
     // Slideshow Controls
     const prevButton = document.querySelector('.slideshow-prev');
@@ -298,3 +229,24 @@ if (slideshowContainer) {
     showSlide(currentSlide);
   }
 }
+
+// Status Message Styles
+const style = document.createElement('style');
+style.textContent = `
+  .status-message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .status-message.success {
+    background: #d4edda;
+    color: #155724;
+  }
+  .status-message.error {
+    background: #f8d7da;
+    color: #721c24;
+  }
+`;
+document.head.appendChild(style);
