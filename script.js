@@ -8,6 +8,24 @@ function logError(message, error) {
   // Optional: Sende an Monitoring-Dienst (z. B. Sentry)
 }
 
+// Prevent Horizontal Scrolling
+document.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchmove', e => {
+  const touchX = e.touches[0].clientX;
+  const touchY = e.touches[0].clientY;
+  const deltaX = Math.abs(touchX - touchStartX);
+  const deltaY = Math.abs(touchY - touchStartY);
+
+  // Block horizontal scrolling if swipe is more horizontal than vertical
+  if (deltaX > deltaY && deltaX > 10) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
 // Smooth Scroll for Anchor Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
@@ -17,6 +35,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       target.scrollIntoView({
         behavior: 'smooth'
       });
+    } else {
+      console.warn(`[FlinkeBesen] Anchor target not found: ${anchor.getAttribute('href')}`);
     }
   });
 });
@@ -45,7 +65,7 @@ const observer = new IntersectionObserver((entries, observer) => {
         observer.unobserve(entry.target);
       }
     });
-  }, 100);
+  }, 50); // Reduced from 100ms for smoother performance
 }, { threshold: 0.1, rootMargin: '50px' });
 document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
@@ -77,8 +97,7 @@ if (form) {
       if (!formData.get('firstName').trim() || !formData.get('lastName').trim()) {
         const statusMessage = document.createElement('div');
         statusMessage.setAttribute('aria-live', 'polite');
-        statusMessage.style.marginTop = '10px';
-        statusMessage.style.color = 'red';
+        statusMessage.classList.add('status-message', 'error');
         statusMessage.textContent = 'Bitte geben Sie Vor- und Nachname ein.';
         form.appendChild(statusMessage);
         setTimeout(() => statusMessage.remove(), 5000);
@@ -89,8 +108,7 @@ if (form) {
       if (!formData.get('name').trim()) {
         const statusMessage = document.createElement('div');
         statusMessage.setAttribute('aria-live', 'polite');
-        statusMessage.style.marginTop = '10px';
-        statusMessage.style.color = 'red';
+        statusMessage.classList.add('status-message', 'error');
         statusMessage.textContent = 'Bitte geben Sie Ihren Namen ein.';
         form.appendChild(statusMessage);
         setTimeout(() => statusMessage.remove(), 5000);
@@ -100,8 +118,7 @@ if (form) {
     } else {
       const statusMessage = document.createElement('div');
       statusMessage.setAttribute('aria-live', 'polite');
-      statusMessage.style.marginTop = '10px';
-      statusMessage.style.color = 'red';
+      statusMessage.classList.add('status-message', 'error');
       statusMessage.textContent = 'Name ist erforderlich.';
       form.appendChild(statusMessage);
       setTimeout(() => statusMessage.remove(), 5000);
@@ -112,6 +129,24 @@ if (form) {
     let photo_url = null;
     if (formData.get('photos') && formData.get('photos').size > 0) {
       const file = formData.get('photos');
+      if (file.size > 5 * 1024 * 1024) {
+        const statusMessage = document.createElement('div');
+        statusMessage.setAttribute('aria-live', 'polite');
+        statusMessage.classList.add('status-message', 'error');
+        statusMessage.textContent = 'Datei ist zu groß (max. 5MB).';
+        form.appendChild(statusMessage);
+        setTimeout(() => statusMessage.remove(), 5000);
+        return;
+      }
+      if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        const statusMessage = document.createElement('div');
+        statusMessage.setAttribute('aria-live', 'polite');
+        statusMessage.classList.add('status-message', 'error');
+        statusMessage.textContent = 'Nur JPEG- oder PNG-Dateien sind erlaubt.';
+        form.appendChild(statusMessage);
+        setTimeout(() => statusMessage.remove(), 5000);
+        return;
+      }
       const fileName = `${Date.now()}_${file.name}`;
       try {
         const uploadResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/public/photos/${fileName}`, {
@@ -150,18 +185,18 @@ if (form) {
     const phoneRegex = /^\+?[\d\s-]{10,}$/;
     const statusMessage = document.createElement('div');
     statusMessage.setAttribute('aria-live', 'polite');
-    statusMessage.style.marginTop = '10px';
+    statusMessage.classList.add('status-message');
     form.appendChild(statusMessage);
 
     if (!emailRegex.test(data.email)) {
+      statusMessage.classList.add('error');
       statusMessage.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
-      statusMessage.style.color = 'red';
       setTimeout(() => statusMessage.remove(), 5000);
       return;
     }
     if (!phoneRegex.test(data.phone)) {
+      statusMessage.classList.add('error');
       statusMessage.textContent = 'Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).';
-      statusMessage.style.color = 'red';
       setTimeout(() => statusMessage.remove(), 5000);
       return;
     }
@@ -178,21 +213,20 @@ if (form) {
 
       const result = await response.json();
       if (response.ok) {
+        statusMessage.classList.add('success');
         statusMessage.textContent = 'Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.';
-        statusMessage.style.color = 'green';
         form.reset();
       } else {
+        statusMessage.classList.add('error');
         statusMessage.textContent = `Fehler: ${result.error || 'Unbekannter Fehler'}`;
-        statusMessage.style.color = 'red';
         logError('Form submission error:', result.error);
       }
     } catch (error) {
       logError('Network error during form submission:', error);
+      statusMessage.classList.add('error');
       statusMessage.textContent = 'Ein Netzwerkfehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
-      statusMessage.style.color = 'red';
     }
 
-    // Remove Status Message after 5 seconds
     setTimeout(() => statusMessage.remove(), 5000);
   });
 }
@@ -203,14 +237,13 @@ if (slideshowContainer) {
   const slides = document.querySelectorAll('.slide');
   if (slides.length > 0) {
     let currentSlide = 0;
-    let isSwiping = false;
-    let isDragging = false;
     let slideInterval = setInterval(nextSlide, 6000);
 
     function showSlide(index) {
       slides.forEach((slide, i) => {
         slide.classList.toggle('active', i === index);
       });
+      updateDots();
     }
 
     function nextSlide() {
@@ -221,50 +254,45 @@ if (slideshowContainer) {
     // Add ARIA label for accessibility
     slideshowContainer.setAttribute('aria-label', 'Bild-Slideshow');
 
-    // Touch-Swipe for Mobile Devices
-    let touchStartX = 0;
-    let touchEndX = 0;
-    slideshowContainer.addEventListener('touchstart', e => {
-      clearInterval(slideInterval);
-      touchStartX = e.changedTouches[0].screenX;
-    });
-    slideshowContainer.addEventListener('touchend', e => {
-      if (isSwiping) return;
-      isSwiping = true;
-      touchEndX = e.changedTouches[0].screenX;
-      if (touchStartX - touchEndX > 75) {
-        nextSlide();
-      } else if (touchEndX - touchStartX > 75) {
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
-      }
-      slideInterval = setInterval(nextSlide, 6000);
-      setTimeout(() => { isSwiping = false; }, 300);
-    });
+    // Slideshow Controls
+    const prevButton = document.querySelector('.slideshow-prev');
+    const nextButton = document.querySelector('.slideshow-next');
+    const dotsContainer = document.querySelector('.slideshow-dots');
+    if (prevButton && nextButton && dotsContainer) {
+      // Generate Dots
+      slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('slideshow-dot');
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.addEventListener('click', () => {
+          clearInterval(slideInterval);
+          currentSlide = i;
+          showSlide(currentSlide);
+          slideInterval = setInterval(nextSlide, 6000);
+        });
+        dotsContainer.appendChild(dot);
+      });
 
-    // Mouse-Drag for Desktop
-    let startX = 0;
-    slideshowContainer.addEventListener('mousedown', e => {
-      clearInterval(slideInterval);
-      isDragging = true;
-      startX = e.pageX;
-    });
-    slideshowContainer.addEventListener('mouseup', e => {
-      if (!isDragging) return;
-      isDragging = false;
-      const endX = e.pageX;
-      if (startX - endX > 75) {
-        nextSlide();
-      } else if (endX - startX > 75) {
+      // Button Controls
+      prevButton.addEventListener('click', () => {
+        clearInterval(slideInterval);
         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         showSlide(currentSlide);
+        slideInterval = setInterval(nextSlide, 6000);
+      });
+      nextButton.addEventListener('click', () => {
+        clearInterval(slideInterval);
+        nextSlide();
+        slideInterval = setInterval(nextSlide, 6000);
+      });
+
+      // Update Dots
+      function updateDots() {
+        document.querySelectorAll('.slideshow-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentSlide);
+        });
       }
-      slideInterval = setInterval(nextSlide, 6000);
-    });
-    slideshowContainer.addEventListener('mouseleave', () => {
-      isDragging = false;
-      slideInterval = setInterval(nextSlide, 6000);
-    });
+    }
 
     // Initial Slide
     showSlide(currentSlide);
