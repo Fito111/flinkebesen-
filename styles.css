@@ -24,63 +24,160 @@ body {
 header {
   position: sticky;
   top: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 10px 20px;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo-container {
   display: flex;
   align-items: center;
-  font-size: 24px;
-  font-weight: 700;
+  gap: 10px;
 }
 
 .logo-text {
+  font-size: 24px;
+  font-weight: 700;
   color: var(--accent-color);
+}
+
+.logo-icon {
+  color: var(--accent-color);
+  font-size: 20px;
 }
 
 .email-link {
   font-size: 14px;
-  font-weight: 400;
   color: var(--accent-color);
   text-decoration: none;
-  margin-left: 8px;
+  transition: color 0.3s ease;
 }
 
 .email-link:hover, .email-link:focus {
+  color: var(--dark-blue);
   text-decoration: underline;
 }
 
 .burger-icon {
   display: none;
-  font-size: 24px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  width: 30px;
+  height: 20px;
+  position: relative;
+}
+
+.burger-line {
+  background: var(--text-color);
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+.burger-line:nth-child(1) { top: 0; }
+.burger-line:nth-child(2) { top: 8px; }
+.burger-line:nth-child(3) { top: 16px; }
+
+#menu-toggle:checked + .burger-icon .burger-line:nth-child(1) {
+  transform: rotate(45deg);
+  top: 8px;
+}
+
+#menu-toggle:checked + .burger-icon .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+#menu-toggle:checked + .burger-icon .burger-line:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 8px;
 }
 
 #menu-toggle {
   display: none;
 }
 
-nav {
-  transition: max-height 0.3s ease;
+#nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-nav a {
-  margin: 0 15px;
+#nav-menu a {
   text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s ease;
 }
 
-nav a:hover, nav a:focus {
+#nav-menu a:hover, #nav-menu a:focus, #nav-menu a.active {
   color: var(--accent-color);
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.3s ease;
+}
+
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+  color: var(--accent-color);
+}
+
+.dropdown-toggle i {
+  font-size: 12px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu a:hover, .dropdown-menu a:focus, .dropdown-menu a.active {
+  background: var(--section-bg);
+  color: var(--accent-color);
+}
+
+.dropdown.open .dropdown-menu {
+  display: block;
 }
 
 /* Sticky CTA */
@@ -645,6 +742,10 @@ footer > p {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     max-width: none;
   }
+
+  .dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu {
+    display: block;
+  }
 }
 
 @media (max-width: 768px) {
@@ -652,32 +753,47 @@ footer > p {
     padding: 60px 20px;
   }
 
-  .burger-icon { display: block; }
+  .burger-icon {
+    display: block;
+  }
 
-  nav {
-    max-height: 0;
-    overflow: hidden;
+  #nav-menu {
     position: absolute;
     top: 60px;
     left: 0;
     width: 100%;
     background: #fff;
-    padding: 0 20px;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
-  #menu-toggle:checked ~ nav {
-    max-height: 400px;
+  #menu-toggle:checked ~ #nav-menu {
+    max-height: 500px;
     padding: 20px;
   }
 
-  #menu-toggle:checked + .burger-icon {
-    transform: rotate(90deg);
-  }
-
-  nav a {
+  #nav-menu a, .dropdown-toggle {
     display: block;
     margin: 10px 0;
+  }
+
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    background: none;
+    display: none;
+  }
+
+  .dropdown.open .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu a {
+    padding: 8px 15px;
+    font-size: 14px;
   }
 
   .slideshow-container {
