@@ -14,18 +14,40 @@
 <body>
     <!-- Sticky Header -->
     <header>
-        <div class="logo">
-            <span class="logo-text">FB</span>
-            <a href="mailto:kontakt@flinkebesen.de" class="email-link">kontakt@flinkebesen.de</a>
+        <div class="header-container">
+            <div class="logo-container">
+                <span class="logo-text">FB</span>
+                <i class="fas fa-broom logo-icon"></i>
+                <a href="mailto:kontakt@flinkebesen.de" class="email-link">kontakt@flinkebesen.de</a>
+            </div>
+            <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen/schließen">
+            <label for="menu-toggle" class="burger-icon" tabindex="0">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </label>
+            <nav id="nav-menu" aria-labelledby="menu-toggle">
+                <a href="index.html" class="active">Home</a>
+                <a href="#contact">Kontakt</a>
+                <a href="#about">Über uns</a>
+                <a href="#faq">FAQ</a>
+                <div class="dropdown">
+                    <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        Dienstleistungen <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="dienstleistungen/haushaltsreinigung.html">Haushaltsreinigung</a>
+                        <a href="dienstleistungen/bueroreinigung.html">Büroreinigung</a>
+                        <a href="dienstleistungen/fensterreinigung.html">Fensterreinigung</a>
+                        <a href="dienstleistungen/umzugsreinigung.html">Umzugsreinigung</a>
+                        <a href="dienstleistungen/grundreinigung.html">Grundreinigung</a>
+                        <a href="dienstleistungen/teppichreinigung.html">Teppichreinigung</a>
+                        <a href="dienstleistungen/bauendreinigung.html">Bauendreinigung</a>
+                        <a href="dienstleistungen/praxisreinigung.html">Praxisreinigung</a>
+                    </div>
+                </div>
+            </nav>
         </div>
-        <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen/schließen">
-        <label for="menu-toggle" class="burger-icon">☰</label>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="#contact">Kontakt</a>
-            <a href="#about">Über uns</a>
-            <a href="#faq">FAQ</a>
-        </nav>
     </header>
 
     <!-- Sticky Kontakt-Button -->
