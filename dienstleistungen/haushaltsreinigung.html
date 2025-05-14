@@ -8,31 +8,41 @@
     <link rel="stylesheet" href="dienstleistungen.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Supabase JS Bibliothek -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">
-            <span class="logo-text">FB</span>
-            <a href="mailto:info@flinkebesen.de" class="email-link">info@flinkebesen.de</a>
+        <div class="header-container">
+            <div class="logo-container">
+                <span class="logo-text">FB</span>
+                <i class="fas fa-broom logo-icon"></i>
+                <a href="mailto:info@flinkebesen.de" class="email-link">info@flinkebesen.de</a>
+            </div>
+            <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen/schließen">
+            <label for="menu-toggle" class="burger-icon" tabindex="0">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </label>
+            <nav id="nav-menu" aria-labelledby="menu-toggle">
+                <a href="../index.html">Home</a>
+                <div class="dropdown">
+                    <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                        Dienstleistungen <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="haushaltsreinigung.html" class="active">Haushaltsreinigung</a>
+                        <a href="bueroreinigung.html">Büroreinigung</a>
+                        <a href="fensterreinigung.html">Fensterreinigung</a>
+                        <a href="umzugsreinigung.html">Umzugsreinigung</a>
+                        <a href="grundreinigung.html">Grundreinigung</a>
+                        <a href="teppichreinigung.html">Teppichreinigung</a>
+                        <a href="bauendreinigung.html">Bauendreinigung</a>
+                        <a href="praxisreinigung.html">Praxisreinigung</a>
+                    </div>
+                </div>
+            </nav>
         </div>
-        <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen/schließen">
-        <label for="menu-toggle" class="burger-icon" tabindex="0">☰</label>
-        <nav id="nav-menu" aria-labelledby="menu-toggle">
-            <a href="../index.html">Home</a>
-            <a href="haushaltsreinigung.html">Haushaltsreinigung</a>
-            <a href="bueroreinigung.html">Büroreinigung</a>
-            <a href="fensterreinigung.html">Fensterreinigung</a>
-            <a href="umzugsreinigung.html">Umzugsreinigung</a>
-            <a href="grundreinigung.html">Grundreinigung</a>
-            <a href="teppichreinigung.html">Teppichreinigung</a>
-            <a href="bauendreinigung.html">Bauendreinigung</a>
-            <a href="praxisreinigung.html">Praxisreinigung</a>
-            <a href="../rechtliches/datenschutz.html">Datenschutz</a>
-            <a href="../rechtliches/impressum.html">Impressum</a>
-        </nav>
     </header>
 
     <!-- Sticky CTA -->
@@ -40,25 +50,25 @@
         <i class="fas fa-envelope"></i> Angebot anfordern
     </a>
 
-    <!-- Intro-Bild -->
+    <!-- Intro Section -->
     <section id="intro">
         <div class="intro-image">
             <img src="https://images.pexels.com/photos/4107286/pexels-photo-4107286.jpeg?auto=compress&cs=tinysrgb&w=1200" 
-                 alt="Sauberes Zuhause Wiernsheim" class="animate" loading="lazy">
+                 alt="Professionelle Haushaltsreinigung in Wiernsheim" class="animate" loading="lazy">
             <div class="intro-text">
                 <h1 class="animate">Haushaltsreinigung Wiernsheim</h1>
-                <p class="animate">Sauberkeit und Hygiene für Ihr Zuhause</p>
+                <p class="animate">Ein sauberes Zuhause, stressfrei</p>
             </div>
         </div>
     </section>
 
-    <!-- Beschreibung -->
+    <!-- Beschreibung Section -->
     <section id="description">
-        <h2 class="animate">Makellose Ergebnisse mit Flinke Besen</h2>
-        <p class="animate">Wir sorgen für ein sauberes Zuhause in Wiernsheim. Unser Team bietet gründliche Haushaltsreinigung mit umweltfreundlichen, biologisch abbaubaren Mitteln. Mit über 10 Jahren Erfahrung garantieren wir makellose Ergebnisse, flexibel nach Ihren Wünschen.</p>
+        <h2 class="animate">Ihr Zuhause in besten Händen</h2>
+        <p class="animate">Unsere professionelle Haushaltsreinigung in Wiernsheim sorgt für ein makelloses Zuhause. Mit umweltfreundlichen Reinigungsmitteln und einem erfahrenen Team bieten wir flexible Lösungen, die sich Ihren Bedürfnissen anpassen. Überlassen Sie die Reinigung uns und genießen Sie mehr Freizeit!</p>
     </section>
 
-    <!-- Kontaktformular -->
+    <!-- Kontakt Section -->
     <section id="contact">
         <h2 class="animate">Kontaktieren Sie uns in Wiernsheim</h2>
         <p class="animate">Fordern Sie ein kostenloses Angebot für Wiernsheim und Umgebung an.</p>
@@ -128,7 +138,7 @@
         </form>
     </section>
 
-    <!-- FAQs -->
+    <!-- FAQ Section -->
     <section id="faq">
         <h2 class="animate">Häufige Fragen</h2>
         <div class="faq-container">
@@ -159,7 +169,49 @@
         </div>
     </section>
 
-    <!-- USPs -->
+    <!-- Dienstleistungen Section -->
+    <section id="services">
+        <h2 class="animate">Unsere Dienstleistungen</h2>
+        <div class="services-list">
+            <a href="haushaltsreinigung.html" class="service-card animate" data-delay="0">
+                <img src="https://images.pexels.com/photos/4107286/pexels-photo-4107286.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Professionelle Haushaltsreinigung in Wiernsheim" loading="lazy">
+                <h3>Haushaltsreinigung</h3>
+                <p>Gründliche Reinigung für Ihr Zuhause.</p>
+            </a>
+            <a href="bueroreinigung.html" class="service-card animate" data-delay="100">
+                <img src="https://images.pexels.com/photos/4164059/pexels-photo-4164059.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Büroreinigung für Unternehmen in Wiernsheim" loading="lazy">
+                <h3>Büroreinigung</h3>
+                <p>Saubere Büros für produktive Teams.</p>
+            </a>
+            <a href="fensterreinigung.html" class="service-card animate" data-delay="200">
+                <img src="https://images.pexels.com/photos/6195984/pexels-photo-6195984.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Streifenfreie Fensterreinigung in Wiernsheim" loading="lazy">
+                <h3>Fensterreinigung</h3>
+                <p>Streifenfreie Fenster, innen & außen.</p>
+            </a>
+            <a href="umzugsreinigung.html" class="service-card animate" data-delay="300">
+                <img src="https://images.pexels.com/photos/4246115/pexels-photo-4246115.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Umzugsreinigung für Wohnungen in Wiernsheim" loading="lazy">
+                <h3>Umzugsreinigung</h3>
+                <p>Endreinigung für Ihren Umzug.</p>
+            </a>
+            <a href="grundreinigung.html" class="service-card animate" data-delay="400">
+                <img src="https://images.pexels.com/photos/4239068/pexels-photo-4239068.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Intensive Grundreinigung in Wiernsheim" loading="lazy">
+                <h3>Grundreinigung</h3>
+                <p>Intensive Reinigung für alle Flächen.</p>
+            </a>
+            <a href="teppichreinigung.html" class="service-card animate" data-delay="500">
+                <img src="https://images.pexels.com/photos/38325/vacuum-cleaner-carpet-cleaner-housework-housekeeping-38325.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Professionelle Teppichreinigung in Wiernsheim" loading="lazy">
+                <h3>Teppichreinigung</h3>
+                <p>Professionelle Pflege für Ihre Teppiche.</p>
+            </a>
+            <a href="praxisreinigung.html" class="service-card animate" data-delay="600">
+                <img src="https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Hygienische Praxisreinigung in Wiernsheim" loading="lazy">
+                <h3>Praxisreinigung</h3>
+                <p>Hygienische Reinigung für Praxen.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- USPs Section -->
     <section id="usps">
         <h2 class="animate">Warum Flinke Besen?</h2>
         <div class="usps-list">
@@ -186,61 +238,6 @@
         </div>
     </section>
 
-    <!-- Dienstleistungen -->
-    <section id="services">
-        <h2 class="animate">Unsere Dienstleistungen</h2>
-        <div class="services-list">
-            <a href="bueroreinigung.html" class="service-card animate" data-delay="0">
-                <i class="fas fa-building"></i>
-                <img src="https://images.pexels.com/photos/4164059/pexels-photo-4164059.jpeg" alt="Büroreinigung Wiernsheim" loading="lazy">
-                <h3>Büroreinigung</h3>
-                <p>Saubere Büros für produktive Teams.</p>
-            </a>
-            <a href="fensterreinigung.html" class="service-card animate" data-delay="100">
-                <i class="fas fa-window-maximize"></i>
-                <img src="https://images.pexels.com/photos/6197129/pexels-photo-6197129.jpeg" alt="Fensterreinigung Wiernsheim" loading="lazy">
-                <h3>Fensterreinigung</h3>
-                <p>Streifenfreie Fenster, innen & außen.</p>
-            </a>
-            <a href="umzugsreinigung.html" class="service-card animate" data-delay="200">
-                <i class="fas fa-truck-moving"></i>
-                <img src="https://images.pexels.com/photos/4246119/pexels-photo-4246119.jpeg" alt="Umzugsreinigung Wiernsheim" loading="lazy">
-                <h3>Umzugsreinigung</h3>
-                <p>Endreinigung für Ihren Umzug.</p>
-            </a>
-            <a href="grundreinigung.html" class="service-card animate" data-delay="300">
-                <i class="fas fa-scrubber"></i>
-                <img src="https://images.pexels.com/photos/4239069/pexels-photo-4239069.jpeg" alt="Grundreinigung Wiernsheim" loading="lazy">
-                <h3>Grundreinigung</h3>
-                <p>Intensive Reinigung für alle Flächen.</p>
-            </a>
-            <a href="teppichreinigung.html" class="service-card animate" data-delay="400">
-                <i class="fas fa-rug"></i>
-                <img src="https://images.pexels.com/photos/6297086/pexels-photo-6297086.jpeg" alt="Teppichreinigung Wiernsheim" loading="lazy">
-                <h3>Teppichreinigung</h3>
-                <p>Professionelle Pflege für Ihre Teppiche.</p>
-            </a>
-            <a href="bauendreinigung.html" class="service-card animate" data-delay="500">
-                <i class="fas fa-hard-hat"></i>
-                <img src="https://images.pexels.com/photos/4791477/pexels-photo-4791477.jpeg" alt="Bauendreinigung Wiernsheim" loading="lazy">
-                <h3>Bauendreinigung</h3>
-                <p>Sauberkeit nach Bauprojekten.</p>
-            </a>
-            <a href="praxisreinigung.html" class="service-card animate" data-delay="600">
-                <i class="fas fa-stethoscope"></i>
-                <img src="https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg" alt="Praxisreinigung Wiernsheim" loading="lazy">
-                <h3>Praxisreinigung</h3>
-                <p>Hygienische Reinigung für Praxen.</p>
-            </a>
-        </div>
-    </section>
-
-    <!-- Über Uns -->
-    <section id="about">
-        <h2 class="animate">Über Flinke Besen</h2>
-        <p class="animate">Wir sind Ihr Partner für Sauberkeit in Wiernsheim und Umgebung. Mit Leidenschaft und Präzision sorgen wir für makellose Ergebnisse.</p>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -265,6 +262,9 @@
                     <li><a href="fensterreinigung.html">Fensterreinigung</a></li>
                     <li><a href="umzugsreinigung.html">Umzugsreinigung</a></li>
                     <li><a href="grundreinigung.html">Grundreinigung</a></li>
+                    <li><a href="teppichreinigung.html">Teppichreinigung</a></li>
+                    <li><a href="bauendreinigung.html">Bauendreinigung</a></li>
+                    <li><a href="praxisreinigung.html">Praxisreinigung</a></li>
                 </ul>
             </div>
         </div>
