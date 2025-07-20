@@ -143,7 +143,7 @@
                 <h3>Umzugsreinigung</h3>
                 <p>Endreinigung für Ihren Umzug.</p>
             </a>
-            <a href="dienstleistungen/grundreinigung.html" class="service-card animate" data-delay="400">
+            <a href="dienstleistungen/grundreinigung tragedies.html" class="service-card animate" data-delay="400">
                 <img src="https://images.pexels.com/photos/4239068/pexels-photo-4239068.jpeg?auto=compress&cs=tinysrgb&w=300" 
                      alt="Intensive Grundreinigung in Wiernsheim" loading="lazy">
                 <h3>Grundreinigung</h3>
@@ -197,11 +197,19 @@
         <h2 class="animate">Kontaktieren Sie uns in Wiernsheim</h2>
         <p class="animate">Fordern Sie ein kostenloses Angebot für Wiernsheim und Umgebung an.</p>
         <div class="contact-content">
-            <form class="animate" role="form" id="contact-form">
+            <form name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="animate" role="form" id="contact-form">
+                <input type="hidden" name="form-name" value="kontakt" />
+                <p style="display:none">
+                    <label>Bitte dieses Feld nicht ausfüllen: <input name="bot-field" /></label>
+                </p>
                 <input type="text" placeholder="Ihr Name" id="name" name="name" aria-label="Name" required>
                 <input type="tel" placeholder="Ihre Telefonnummer" id="phone" name="phone" aria-label="Telefonnummer" required>
                 <input type="email" placeholder="Ihre E-Mail" id="email" name="email" aria-label="E-Mail" required>
                 <textarea placeholder="Ihre Nachricht (optional)" id="message" name="message" aria-label="Nachricht"></textarea>
+                <label>
+                    <input type="checkbox" required>
+                    Ich stimme der <a href="rechtliches/datenschutz.html" target="_blank">Datenschutzerklärung</a> zu.
+                </label>
                 <button type="submit">Angebot anfordern</button>
             </form>
         </div>
