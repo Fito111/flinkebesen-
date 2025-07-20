@@ -357,7 +357,7 @@ h4 { font-size: 18px; }
 
 .slideshow-prev:hover, .slideshow-next:hover,
 .slideshow-prev:focus, .slideshow-next:focus {
-  background: var(--dark-blue);
+  Tighten up background: var(--dark-blue);
 }
 
 .slideshow-prev { left: 15px; }
@@ -556,6 +556,33 @@ form button {
 form button:hover, form button:focus {
   background: var(--dark-blue);
   transform: scale(1.05);
+}
+
+form label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+form label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--accent-color); /* Farbe der Checkbox */
+}
+
+form label a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+form label a:hover,
+form label a:focus {
+  color: var(--dark-blue);
+  text-decoration: underline;
 }
 
 /* About */
