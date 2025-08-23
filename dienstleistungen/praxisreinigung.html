@@ -1,285 +1,278 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professionelle Praxisreinigung in Wiernsheim (PLZ 75446). Hygienische Reinigung für Arztpraxen und Büros. Jetzt Angebot anfordern!">
-    <title>Praxisreinigung Wiernsheim - Flinke Besen</title>
-    <link rel="stylesheet" href="dienstleistungen.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <span class="logo-text">FB</span>
-                <i class="fas fa-broom logo-icon"></i>
-                <a href="mailto:info@flinkebesen.de" class="email-link">info@flinkebesen.de</a>
-            </div>
-            <input type="checkbox" id="menu-toggle" aria-label="Menü öffnen/schließen">
-            <label for="menu-toggle" class="burger-icon" tabindex="0">
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-            </label>
-            <nav id="nav-menu" aria-labelledby="menu-toggle">
-                <a href="../index.html">Home</a>
-                <div class="dropdown">
-                    <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                        Dienstleistungen <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="haushaltsreinigung.html">Haushaltsreinigung</a>
-                        <a href="bueroreinigung.html">Büroreinigung</a>
-                        <a href="fensterreinigung.html">Fensterreinigung</a>
-                        <a href="umzugsreinigung.html">Umzugsreinigung</a>
-                        <a href="grundreinigung.html">Grundreinigung</a>
-                        <a href="teppichreinigung.html">Teppichreinigung</a>
-                        <a href="bauendreinigung.html">Bauendreinigung</a>
-                        <a href="praxisreinigung.html" class="active">Praxisreinigung</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+// Supabase Configuration
+const SUPABASE_URL = 'https://wvtqoffvvxegwjhwelfz.supabase.co';
+const SUPABASE_API_KEY = 'YOUR_SUPABASE_API_KEY'; // Ersetze mit deinem API-Schlüssel
 
-    <!-- Sticky CTA -->
-    <a href="#contact" class="sticky-cta" aria-label="Kostenloses Angebot anfordern">
-        <i class="fas fa-envelope"></i> Angebot anfordern
-    </a>
+// Error Logging Function
+function logError(message, error) {
+  console.error(`[FlinkeBesen] ${message}`, error);
+  // Optional: Sende an Monitoring-Dienst (z. B. Sentry)
+}
 
-    <!-- Intro Section -->
-    <section id="intro">
-        <div class="intro-image">
-            <img src="https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=1200" 
-                 alt="Professionelle Praxisreinigung in Wiernsheim" class="animate" loading="lazy">
-            <div class="intro-text">
-                <h1 class="animate">Praxisreinigung Wiernsheim</h1>
-                <p class="animate">Hygienische Sauberkeit für Ihre Praxis</p>
-            </div>
-        </div>
-    </section>
+// Prevent Horizontal Scrolling
+let touchStartX, touchStartY;
+document.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
 
-    <!-- Beschreibung Section -->
-    <section id="description">
-        <h2 class="animate">Höchste Hygienestandards für Ihre Praxis</h2>
-        <p class="animate">Unsere Praxisreinigung in Wiernsheim sorgt für ein hygienisches und einladendes Umfeld in Arztpraxen und medizinischen Einrichtungen. Mit umweltfreundlichen Reinigungsmitteln und einem geschulten Team erfüllen wir höchste Sauberkeitsstandards, flexibel nach Ihren Anforderungen.</p>
-    </section>
+document.addEventListener('touchmove', e => {
+  const touchX = e.touches[0].clientX;
+  const touchY = e.touches[0].clientY;
+  const deltaX = Math.abs(touchX - touchStartX);
+  const deltaY = Math.abs(touchY - touchStartY);
 
-    <!-- Kontakt Section -->
-    <section id="contact">
-        <h2 class="animate">Kontaktieren Sie uns in Wiernsheim</h2>
-        <p class="animate">Fordern Sie ein kostenloses Angebot für Wiernsheim und Umgebung an.</p>
-        <form class="animate contact-form" id="service-form" role="form">
-            <div class="form-group">
-                <select name="service" aria-label="Dienstleistung" required disabled>
-                    <option value="praxisreinigung" selected>Praxisreinigung</option>
-                </select>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <input type="text" name="firstName" placeholder="Vorname *" aria-label="Vorname" required>
-                <span class="error-message"></span>
-                <input type="text" name="lastName" placeholder="Nachname *" aria-label="Nachname" required>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <input type="tel" name="phone" placeholder="Telefonnummer *" aria-label="Telefonnummer" required>
-                <span class="error-message"></span>
-                <input type="email" name="email" placeholder="E-Mail *" aria-label="E-Mail" required>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <input type="text" name="street" placeholder="Straße *" aria-label="Straße" required>
-                <span class="error-message"></span>
-                <input type="text" name="zip" placeholder="PLZ *" aria-label="PLZ" required>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <input type="text" name="city" placeholder="Ort *" aria-label="Ort" required>
-                <span class="error-message"></span>
-                <div class="input-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                    <input type="date" name="date" placeholder="Datum *" aria-label="Datum" required>
-                </div>
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <select name="time" aria-label="Uhrzeit" required>
-                    <option value="" disabled selected>Uhrzeit wählen *</option>
-                    <option value="08:00-10:00">08:00-10:00</option>
-                    <option value="10:00-12:00">10:00-12:00</option>
-                    <option value="12:00-14:00">12:00-14:00</option>
-                    <option value="14:00-16:00">14:00-16:00</option>
-                    <option value="16:00-18:00">16:00-18:00</option>
-                    <option value="18:00-20:00">18:00-20:00</option>
-                    <option value="20:00-22:00">20:00-22:00</option>
-                    <option value="22:00-24:00">22:00-24:00</option>
-                </select>
-                <span class="error-message"></span>
-                <input type="file" name="photos" accept="image/*" placeholder="Fotos (optional)" aria-label="Fotos hochladen">
-                <span class="error-message"></span>
-            </div>
-            <div class="form-group">
-                <textarea name="message" placeholder="Ihre Nachricht (optional)" aria-label="Nachricht"></textarea>
-                <span class="error-message"></span>
-            </div>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 5px; max-width: 300px; margin: 0 auto;">
-                <label class="checkbox-label">
-                    <input type="checkbox" name="privacy" checked required>
-                </label>
-                <span style="font-size: 14px; color: #6B7280;">
-                    Ich stimme den <a href="../rechtliches/datenschutz.html" style="color: #0056D2; text-decoration: underline;">Datenschutzbedingungen</a> zu.
-                </span>
-            </div>
-            <button type="submit" class="contact-btn">Angebot anfordern</button>
-        </form>
-    </section>
+  // Block horizontal scrolling if swipe is more horizontal than vertical
+  if (deltaX > deltaY && deltaX > 10) {
+    e.preventDefault();
+  }
+}, { passive: false });
 
-    <!-- FAQ Section -->
-    <section id="faq">
-        <h2 class="animate">Häufige Fragen</h2>
-        <div class="faq-container">
-            <div class="faq-item animate">
-                <button class="faq-question" aria-expanded="false">Welche Dienstleistungen bieten Sie an?</button>
-                <div class="faq-answer">Wir bieten Haushaltsreinigung, Büroreinigung, Treppenhausreinigung, Fensterreinigung, Grundreinigung, Unterhaltsreinigung, Bauendreinigung, Praxisreinigung und Teppichreinigung.</div>
-            </div>
-            <div class="faq-item animate">
-                <button class="faq-question" aria-expanded="false">Nutzen Sie umweltfreundliche Mittel?</button>
-                <div class="faq-answer">Ja, wir verwenden ausschließlich biologisch abbaubare Reinigungsmittel, frei von schädlichen Chemikalien.</div>
-            </div>
-            <div class="faq-item animate">
-                <button class="faq-question" aria-expanded="false">Muss ich bei der Reinigung anwesend sein?</button>
-                <div class="faq-answer">Nein, viele Kunden übergeben uns einen Schlüssel oder sorgen anderweitig für Zugang.</div>
-            </div>
-            <div class="faq-item animate">
-                <button class="faq-question" aria-expanded="false">Was ist eine Grundreinigung?</button>
-                <div class="faq-answer">Intensive Reinigung von Ecken, Türrahmen, Heizkörpern und hinter Möbeln – ideal als Frühjahrsputz.</div>
-            </div>
-            <div class="faq-item animate">
-                <button class="faq-question" aria-expanded="false">Bieten Sie flexible Zeiten an?</button>
-                <div class="faq-answer">Ja, wir bieten flexible Zeiten, z. B. früh morgens oder am Wochenende.</div>
-            </div>
-            <div class="faq-item animate">
-                <button class="faq-question" aria-expanded="false">Muss ich Reinigungsmittel bereitstellen?</button>
-                <div class="faq-answer">Nein, wir bringen umweltfreundliche Mittel und professionelles Equipment mit.</div>
-            </div>
-        </div>
-    </section>
+// Smooth Scroll for Anchor Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth'
+      });
+      // Close mobile menu after clicking a link
+      const menuToggle = document.getElementById('menu-toggle');
+      if (menuToggle.checked) {
+        menuToggle.checked = false;
+      }
+    } else {
+      console.warn(`[FlinkeBesen] Anchor target not found: ${anchor.getAttribute('href')}`);
+    }
+  });
+});
 
-    <!-- Dienstleistungen Section -->
-    <section id="services">
-        <h2 class="animate">Unsere Dienstleistungen</h2>
-        <div class="services-list">
-            <a href="haushaltsreinigung.html" class="service-card animate" data-delay="0">
-                <img src="https://images.pexels.com/photos/4107286/pexels-photo-4107286.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Professionelle Haushaltsreinigung in Wiernsheim" loading="lazy">
-                <h3>Haushaltsreinigung</h3>
-                <p>Gründliche Reinigung für Ihr Zuhause.</p>
-            </a>
-            <a href="bueroreinigung.html" class="service-card animate" data-delay="100">
-                <img src="https://images.pexels.com/photos/4164059/pexels-photo-4164059.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Büroreinigung für Unternehmen in Wiernsheim" loading="lazy">
-                <h3>Büroreinigung</h3>
-                <p>Saubere Büros für produktive Teams.</p>
-            </a>
-            <a href="fensterreinigung.html" class="service-card animate" data-delay="200">
-                <img src="https://images.pexels.com/photos/6195984/pexels-photo-6195984.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Streifenfreie Fensterreinigung in Wiernsheim" loading="lazy">
-                <h3>Fensterreinigung</h3>
-                <p>Streifenfreie Fenster, innen & außen.</p>
-            </a>
-            <a href="umzugsreinigung.html" class="service-card animate" data-delay="300">
-                <img src="https://images.pexels.com/photos/4246115/pexels-photo-4246115.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Umzugsreinigung für Wohnungen in Wiernsheim" loading="lazy">
-                <h3>Umzugsreinigung</h3>
-                <p>Endreinigung für Ihren Umzug.</p>
-            </a>
-            <a href="grundreinigung.html" class="service-card animate" data-delay="400">
-                <img src="https://images.pexels.com/photos/4239068/pexels-photo-4239068.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Intensive Grundreinigung in Wiernsheim" loading="lazy">
-                <h3>Grundreinigung</h3>
-                <p>Intensive Reinigung für alle Flächen.</p>
-            </a>
-            <a href="teppichreinigung.html" class="service-card animate" data-delay="500">
-                <img src="https://images.pexels.com/photos/38325/vacuum-cleaner-carpet-cleaner-housework-housekeeping-38325.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Professionelle Teppichreinigung in Wiernsheim" loading="lazy">
-                <h3>Teppichreinigung</h3>
-                <p>Professionelle Pflege für Ihre Teppiche.</p>
-            </a>
-            <a href="bauendreinigung.html" class="service-card animate" data-delay="600">
-                <img src="https://images.pexels.com/photos/4791470/pexels-photo-4791470.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Bauendreinigung für Baustellen in Wiernsheim" loading="lazy">
-                <h3>Bauendreinigung</h3>
-                <p>Gründliche Reinigung nach Bauprojekten.</p>
-            </a>
-            <a href="praxisreinigung.html" class="service-card animate" data-delay="700">
-                <img src="https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Hygienische Praxisreinigung in Wiernsheim" loading="lazy">
-                <h3>Praxisreinigung</h3>
-                <p>Hygienische Reinigung für Praxen.</p>
-            </a>
-        </div>
-    </section>
+// Dropdown Menu
+document.querySelectorAll('.dropdown-toggle').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const dropdown = btn.parentElement;
+    const isOpen = dropdown.classList.contains('open');
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+    if (!isOpen) {
+      dropdown.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    } else {
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
 
-    <!-- USPs Section -->
-    <section id="usps">
-        <h2 class="animate">Warum Flinke Besen?</h2>
-        <div class="usps-list">
-            <div class="usp-item animate" data-delay="0">
-                <i class="fas fa-leaf"></i>
-                <h3>Umweltfreundlich</h3>
-                <p>Wir nutzen biologisch abbaubare Reinigungsmittel.</p>
-            </div>
-            <div class="usp-item animate" data-delay="100">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Professionell</h3>
-                <p>Geschultes Team mit über 10 Jahren Erfahrung.</p>
-            </div>
-            <div class="usp-item animate" data-delay="200">
-                <i class="fas fa-clock"></i>
-                <h3>Flexibel</h3>
-                <p>Reinigung zu Ihren Wunschzeiten, auch kurzfristig.</p>
-            </div>
-            <div class="usp-item animate" data-delay="300">
-                <i class="fas fa-euro-sign"></i>
-                <h3>Fair</h3>
-                <p>Transparente Preise ohne versteckte Kosten.</p>
-            </div>
-        </div>
-    </section>
+// Close Dropdown on Outside Click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown').forEach(d => {
+      d.classList.remove('open');
+      d.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+    });
+  }
+});
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>Kontakt</h4>
-                <p>Telefon: <a href="tel:+4917623852087">+49 176 23852087</a><br>
-                   E-Mail: <a href="mailto:info@flinkebesen.de">info@flinkebesen.de</a><br>
-                   Wiernsheim (PLZ 75446)</p>
-                <div class="social-icons">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="mailto:info@flinkebesen.de" aria-label="E-Mail"><i class="fas fa-envelope"></i></a>
-                    <a href="tel:+4917623852087" aria-label="Telefon"><i class="fas fa-phone"></i></a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <h4>Dienstleistungen</h4>
-                <ul>
-                    <li><a href="haushaltsreinigung.html">Haushaltsreinigung</a></li>
-                    <li><a href="bueroreinigung.html">Büroreinigung</a></li>
-                    <li><a href="fensterreinigung.html">Fensterreinigung</a></li>
-                    <li><a href="umzugsreinigung.html">Umzugsreinigung</a></li>
-                    <li><a href="grundreinigung.html">Grundreinigung</a></li>
-                    <li><a href="teppichreinigung.html">Teppichreinigung</a></li>
-                    <li><a href="bauendreinigung.html">Bauendreinigung</a></li>
-                    <li><a href="praxisreinigung.html">Praxisreinigung</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-links">
-            <a href="../rechtliches/impressum.html">Impressum</a>
-            <a href="../rechtliches/datenschutz.html">Datenschutz</a>
-        </div>
-        <p>© 2025 Flinke Besen. Alle Rechte vorbehalten.</p>
-    </footer>
+// FAQ Accordion
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  });
+});
 
-    <script src="../script.js"></script>
-</body>
-</html>
+// Scroll Animations with Delay
+let debounceTimeout;
+const observer = new IntersectionObserver((entries, observer) => {
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        entry.target.style.animationDelay = `${delay}ms`;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, 50);
+}, { threshold: 0.1, rootMargin: '50px' });
+document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+// Keyboard Navigation for Forms
+document.querySelectorAll('form input, form textarea, form select, form button').forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && el.tagName !== 'BUTTON') {
+      e.preventDefault();
+      const form = el.form;
+      const inputs = Array.from(form.querySelectorAll('input, textarea, select, button'));
+      const next = inputs[inputs.indexOf(el) + 1];
+      if (next) next.focus();
+    }
+  });
+});
+
+// Form Submission with Supabase Edge Function
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+
+    // Name Validation
+    const name = formData.get('name');
+    if (!name.trim()) {
+      const statusMessage = document.createElement('div');
+      statusMessage.setAttribute('aria-live', 'polite');
+      statusMessage.classList.add('status-message', 'error');
+      statusMessage.textContent = 'Bitte geben Sie Ihren Namen ein.';
+      contactForm.appendChild(statusMessage);
+      setTimeout(() => statusMessage.remove(), 5000);
+      return;
+    }
+
+    const data = {
+      name: name,
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      message: formData.get('message') || null
+    };
+
+    // Validate Email and Phone
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?[\d\s-]{10,}$/;
+    const statusMessage = document.createElement('div');
+    statusMessage.setAttribute('aria-live', 'polite');
+    statusMessage.classList.add('status-message');
+    contactForm.appendChild(statusMessage);
+
+    if (!emailRegex.test(data.email)) {
+      statusMessage.classList.add('error');
+      statusMessage.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      setTimeout(() => statusMessage.remove(), 5000);
+      return;
+    }
+    if (!phoneRegex.test(data.phone)) {
+      statusMessage.classList.add('error');
+      statusMessage.textContent = 'Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).';
+      setTimeout(() => statusMessage.remove(), 5000);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/submit-contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_API_KEY}`
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        statusMessage.classList.add('success');
+        statusMessage.textContent = 'Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.';
+        contactForm.reset();
+      } else {
+        statusMessage.classList.add('error');
+        statusMessage.textContent = `Fehler: ${result.error || 'Unbekannter Fehler'}`;
+        logError('Form submission error:', result.error);
+      }
+    } catch (error) {
+      logError('Network error during form submission:', error);
+      statusMessage.classList.add('error');
+      statusMessage.textContent = 'Ein Netzwerkfehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+    }
+
+    setTimeout(() => statusMessage.remove(), 5000);
+  });
+}
+
+// Slideshow
+const slideshowContainer = document.querySelector('.slideshow-container');
+if (slideshowContainer) {
+  const slides = document.querySelectorAll('.slide');
+  if (slides.length > 0) {
+    let currentSlide = 0;
+    let slideInterval = setInterval(nextSlide, 6000);
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      updateDots();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    // Slideshow Controls
+    const prevButton = document.querySelector('.slideshow-prev');
+    const nextButton = document.querySelector('.slideshow-next');
+    const dotsContainer = document.querySelector('.slideshow-dots');
+    if (prevButton && nextButton && dotsContainer) {
+      // Generate Dots
+      slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('slideshow-dot');
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.addEventListener('click', () => {
+          clearInterval(slideInterval);
+          currentSlide = i;
+          showSlide(currentSlide);
+          slideInterval = setInterval(nextSlide, 6000);
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      // Button Controls
+      prevButton.addEventListener('click', () => {
+        clearInterval(slideInterval);
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+        slideInterval = setInterval(nextSlide, 6000);
+      });
+      nextButton.addEventListener('click', () => {
+        clearInterval(slideInterval);
+        nextSlide();
+        slideInterval = setInterval(nextSlide, 6000);
+      });
+
+      // Update Dots
+      function updateDots() {
+        document.querySelectorAll('.slideshow-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentSlide);
+        });
+      }
+    }
+
+    // Initial Slide
+    showSlide(currentSlide);
+  }
+}
+
+// Status Message Styles
+const style = document.createElement('style');
+style.textContent = `
+  .status-message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .status-message.success {
+    background: #d4edda;
+    color: #155724;
+  }
+  .status-message.error {
+    background: #f8d7da;
+    color: #721c24;
+  }
+`;
+document.head.appendChild(style);
