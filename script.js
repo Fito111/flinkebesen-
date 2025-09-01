@@ -36,51 +36,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       target.scrollIntoView({
         behavior: 'smooth'
       });
-      // Close mobile menu after clicking a link
-      const menuToggle = document.getElementById('menu-toggle');
-      if (menuToggle.checked) {
-        menuToggle.checked = false;
-      }
     } else {
       console.warn(`[FlinkeBesen] Anchor target not found: ${anchor.getAttribute('href')}`);
     }
-  });
-});
-
-// Dropdown Menu
-document.querySelectorAll('.dropdown-toggle').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    const dropdown = btn.parentElement;
-    const isOpen = dropdown.classList.contains('open');
-    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
-    if (!isOpen) {
-      dropdown.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
-    } else {
-      btn.setAttribute('aria-expanded', 'false');
-    }
-  });
-});
-
-// Close Dropdown on Outside Click
-document.addEventListener('click', e => {
-  if (!e.target.closest('.dropdown')) {
-    document.querySelectorAll('.dropdown').forEach(d => {
-      d.classList.remove('open');
-      d.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
-    });
-  }
-});
-
-// FAQ Accordion
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-    btn.setAttribute('aria-expanded', !isOpen);
   });
 });
 
