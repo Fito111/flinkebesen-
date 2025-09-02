@@ -94,6 +94,37 @@ section {
   margin: 0 auto;
 }
 
+h1, h2, h3, h4 {
+  margin: 0 0 20px;
+  color: var(--dark-blue);
+  font-weight: 700;
+}
+
+h1 { font-size: 36px; text-align: center; }
+
+h2 {
+  font-size: 32px;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: var(--accent-color);
+}
+
+h3 { font-size: 20px; }
+
+h4 { font-size: 18px; }
+
+/* Hero Section */
 #hero {
   padding: 0;
   margin: 0;
@@ -105,14 +136,11 @@ section {
   display: block;
 }
 
+/* Intro Section */
 #intro {
-  text-align: center;
   background: var(--section-bg);
-}
-
-#intro h1 {
-  font-size: 36px;
-  color: var(--dark-blue);
+  text-align: center;
+  padding: 40px 20px;
 }
 
 .value-statement {
@@ -124,59 +152,58 @@ section {
 .cta-button {
   background: var(--button-color);
   color: var(--button-text);
-  padding: 12px 30px;
-  border-radius: 10px;
+  padding: 12px 20px;
+  border-radius: 50px;
   text-decoration: none;
   font-size: 14px;
-  transition: background 0.3s ease, transform 0.2s ease;
-  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .cta-button:hover, .cta-button:focus {
   background: var(--dark-blue);
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
+/* Kurz- und Detailbeschreibung */
 #short-description, #detail-description {
-  background: var(--section-bg);
+  background: #fff;
   text-align: center;
+  padding: 40px 20px;
 }
 
 #short-description p, #detail-description p {
-  font-size: 16px;
   max-width: 800px;
   margin: 0 auto 20px;
+  font-size: 16px;
 }
 
+/* Prozess Section */
 #process {
-  background: #fff;
+  background: var(--section-bg);
   text-align: center;
 }
 
-.process-circles {
+.process-steps {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   margin-top: 20px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 @media (min-width: 768px) {
-  .process-circles {
+  .process-steps {
     flex-direction: row;
     justify-content: space-around;
-    max-width: none;
   }
 }
 
-.circle-item {
-  padding: 20px;
-  background: var(--section-bg);
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+.process-step {
+  flex: 1;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 .circle {
@@ -189,108 +216,57 @@ section {
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  font-weight: bold;
   margin: 0 auto 10px;
 }
 
-.circle-item h3 {
+.process-step h3 {
   font-size: 18px;
 }
 
-.circle-item p {
+.process-step p {
   font-size: 14px;
 }
 
-/* Contact */
-#contact {
-  background: var(--section-bg);
+/* USPs */
+#usps {
+  background: var(--section-bg); /* Angepasst für Harmonie: Von #fff zu light blue, für konsistenten blauen Fluss mit anderen Sections */
   text-align: center;
 }
 
-#contact p {
-  font-size: 18px;
-  max-width: 600px;
-  margin: 0 auto 20px;
-}
-
-.contact-content {
-  display: flex;
-  justify-content: center;
-}
-
-form {
-  flex: 0 1 500px;
+.usps-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: #fff;
-  padding: 30px;
+  margin-top: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.usp-item {
+  padding: 20px;
+  background: #fff; /* Angepasst für Harmonie: Items auf white, um milden Kontrast zum section-bg zu schaffen (bestehende Farbe) */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-form input,
-form textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-form textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-form input:focus,
-form textarea:focus {
-  outline: 2px solid var(--accent-color);
-}
-
-form button {
-  background-color: var(--button-color);
-  color: var(--button-text);
-  border: none;
-  padding: 12px 30px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-form button:hover, form button:focus {
-  background: var(--dark-blue);
-  transform: scale(1.05);
-}
-
-form label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-color);
-}
-
-form label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: var(--accent-color);
-}
-
-form label a {
+.usp-item i {
+  font-size: 40px;
   color: var(--accent-color);
-  text-decoration: none;
-  transition: color 0.3s ease;
+  margin-bottom: 10px;
 }
 
-form label a:hover,
-form label a:focus {
-  color: var(--dark-blue);
-  text-decoration: underline;
+.usp-item h3 {
+  font-size: 18px;
 }
 
-/* Other Services */
-#other-services {
+.usp-item p {
+  font-size: 14px;
+}
+
+/* Services / Other Services */
+#services, #other-services {
   background: var(--section-bg);
 }
 
@@ -339,12 +315,139 @@ form label a:focus {
   font-size: 14px;
 }
 
+/* Versprechen */
+#versprechen {
+  background: var(--section-bg);
+  text-align: center;
+}
+
+#versprechen p {
+  font-size: 18px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Contact */
+#contact {
+  background: var(--section-bg);
+  text-align: center;
+}
+
+#contact p {
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.contact-content {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  flex: 0 1 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+form input,
+form textarea {
+  padding: 12px;
+  border: 1px solid #ccc; /* Angepasst für Harmonie: Border zu gray (#ccc ist abgeleitet von deinem gray, für subtilen Kontrast – bestehend) */
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+form input:focus,
+form textarea:focus {
+  outline: 2px solid var(--accent-color);
+}
+
+form button {
+  background-color: var(--button-color);
+  color: var(--button-text);
+  border: none;
+  padding: 12px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover, form button:focus {
+  background: var(--dark-blue);
+  transform: scale(1.05);
+}
+
+form label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+form label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--accent-color); /* Farbe der Checkbox */
+}
+
+form label a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+form label a:hover,
+form label a:focus {
+  color: var(--dark-blue);
+  text-decoration: underline;
+}
+
+/* About */
+#about {
+  background: var(--section-bg); /* Angepasst für Harmonie: Von #fff zu light blue, für einheitlichen Fluss */
+}
+
+.about-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.about-content p {
+  flex: 1;
+  min-width: 250px;
+  font-size: 16px;
+}
+
+.about-content img {
+  flex: 1;
+  min-width: 250px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 /* Footer */
 footer {
   text-align: center;
   padding: 60px 20px;
-  background: var(--footer-bg);
-  color: #fff;
+  background: var(--footer-bg); /* Nun dark blue für besseren blauen Abschluss */
+  color: #fff; /* Angepasst für Harmonie: Text zu white für Kontrast auf dark blue */
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -424,10 +527,13 @@ footer > p {
 
 /* Responsive Design */
 @media (min-width: 768px) {
-  .process-circles, .services-list {
+  .usps-list, .services-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     max-width: none;
+  }
+  .process-steps {
+    flex-direction: row;
   }
 }
 
