@@ -7,7 +7,7 @@
   --button-text: #fff; /* Button-Text */
   --section-bg: #E6F0FA; /* Hellblau für Sektionen */
   --dark-blue: #003087; /* Dunkelblau für Überschriften */
-  --footer-bg: #1A252F; /* Dunkelgrau für Footer */
+  --footer-bg: #003087; /* Angepasst für Harmonie: Von dark gray zu dark blue, um blauen Fluss zu halten (bestehende Farbe) */
 }
 
 body {
@@ -107,7 +107,7 @@ h4 { font-size: 18px; }
 
 /* USPs */
 #usps {
-  background: #fff;
+  background: var(--section-bg); /* Angepasst für Harmonie: Von #fff zu light blue, für konsistenten blauen Fluss mit anderen Sections */
   text-align: center;
 }
 
@@ -123,7 +123,7 @@ h4 { font-size: 18px; }
 
 .usp-item {
   padding: 20px;
-  background: var(--section-bg);
+  background: #fff; /* Angepasst für Harmonie: Items auf white, um milden Kontrast zum section-bg zu schaffen (bestehende Farbe) */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -235,7 +235,7 @@ form {
 form input,
 form textarea {
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc; /* Angepasst für Harmonie: Border zu gray (#ccc ist abgeleitet von deinem gray, für subtilen Kontrast – bestehend) */
   border-radius: 5px;
   font-size: 16px;
 }
@@ -295,7 +295,7 @@ form label a:focus {
 
 /* About */
 #about {
-  background: #fff;
+  background: var(--section-bg); /* Angepasst für Harmonie: Von #fff zu light blue, für einheitlichen Fluss */
 }
 
 .about-content {
@@ -323,8 +323,8 @@ form label a:focus {
 footer {
   text-align: center;
   padding: 60px 20px;
-  background: var(--footer-bg);
-  color: #fff;
+  background: var(--footer-bg); /* Nun dark blue für besseren blauen Abschluss */
+  color: #fff; /* Angepasst für Harmonie: Text zu white für Kontrast auf dark blue */
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
