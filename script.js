@@ -1,11 +1,6 @@
-// Supabase Configuration
-const SUPABASE_URL = 'https://wvtqoffvvxegwjhwelfz.supabase.co';
-const SUPABASE_API_KEY = 'YOUR_SUPABASE_API_KEY'; // Ersetze mit deinem API-Schlüssel
-
 // Error Logging Function
 function logError(message, error) {
   console.error(`[FlinkeBesen] ${message}`, error);
-  // Optional: Sende an Monitoring-Dienst (z. B. Sentry)
 }
 
 // Prevent Horizontal Scrolling
@@ -21,7 +16,6 @@ document.addEventListener('touchmove', e => {
   const deltaX = Math.abs(touchX - touchStartX);
   const deltaY = Math.abs(touchY - touchStartY);
 
-  // Block horizontal scrolling if swipe is more horizontal than vertical
   if (deltaX > deltaY && deltaX > 10) {
     e.preventDefault();
   }
@@ -33,9 +27,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     e.preventDefault();
     const target = document.querySelector(anchor.getAttribute('href'));
     if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth'
-      });
+      target.scrollIntoView({ behavior: 'smooth' });
     } else {
       console.warn(`[FlinkeBesen] Anchor target not found: ${anchor.getAttribute('href')}`);
     }
@@ -72,78 +64,17 @@ document.querySelectorAll('form input, form textarea, form select, form button')
   });
 });
 
-// Form Submission with Supabase Edge Function
+// Netlify Form Submission Handling
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
-  contactForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const formData = new FormData(contactForm);
-
-    // Name Validation
-    const name = formData.get('name');
-    if (!name.trim()) {
-      const statusMessage = document.createElement('div');
-      statusMessage.setAttribute('aria-live', 'polite');
-      statusMessage.classList.add('status-message', 'error');
-      statusMessage.textContent = 'Bitte geben Sie Ihren Namen ein.';
-      contactForm.appendChild(statusMessage);
-      setTimeout(() => statusMessage.remove(), 5000);
-      return;
-    }
-
-    const data = {
-      name: name,
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      message: formData.get('message') || null
-    };
-
-    // Validate Email and Phone
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\+?[\d\s-]{10,}$/;
+  contactForm.addEventListener('submit', e => {
+    // Hier kein e.preventDefault() – Netlify nimmt den POST automatisch
+    // Optional: Zeige direkt eine kleine Nachricht beim Absenden
     const statusMessage = document.createElement('div');
     statusMessage.setAttribute('aria-live', 'polite');
     statusMessage.classList.add('status-message');
+    statusMessage.textContent = 'Senden...';
     contactForm.appendChild(statusMessage);
-
-    if (!emailRegex.test(data.email)) {
-      statusMessage.classList.add('error');
-      statusMessage.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
-      setTimeout(() => statusMessage.remove(), 5000);
-      return;
-    }
-    if (!phoneRegex.test(data.phone)) {
-      statusMessage.classList.add('error');
-      statusMessage.textContent = 'Bitte geben Sie eine gültige Telefonnummer ein (z. B. +49123456789).';
-      setTimeout(() => statusMessage.remove(), 5000);
-      return;
-    }
-
-    try {
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/submit-contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_API_KEY}`
-        },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        statusMessage.classList.add('success');
-        statusMessage.textContent = 'Vielen Dank! Ihre Anfrage wurde gesendet. Wir melden uns bald.';
-        contactForm.reset();
-      } else {
-        statusMessage.classList.add('error');
-        statusMessage.textContent = `Fehler: ${result.error || 'Unbekannter Fehler'}`;
-        logError('Form submission error:', result.error);
-      }
-    } catch (error) {
-      logError('Network error during form submission:', error);
-      statusMessage.classList.add('error');
-      statusMessage.textContent = 'Ein Netzwerkfehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
-    }
 
     setTimeout(() => statusMessage.remove(), 5000);
   });
@@ -158,6 +89,8 @@ style.textContent = `
     border-radius: 5px;
     text-align: center;
     font-size: 14px;
+    background: #e2e3e5;
+    color: #41464b;
   }
   .status-message.success {
     background: #d4edda;
