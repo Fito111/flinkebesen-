@@ -68,15 +68,15 @@ document.querySelectorAll('form input, form textarea, form select, form button')
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', e => {
-    // Hier kein e.preventDefault() – Netlify nimmt den POST automatisch
-    // Optional: Zeige direkt eine kleine Nachricht beim Absenden
+    // Kein e.preventDefault() – lass Netlify den POST handhaben und redirecten
     const statusMessage = document.createElement('div');
     statusMessage.setAttribute('aria-live', 'polite');
     statusMessage.classList.add('status-message');
     statusMessage.textContent = 'Senden...';
     contactForm.appendChild(statusMessage);
 
-    setTimeout(() => statusMessage.remove(), 5000);
+    // Entferne die Message nach kurzer Zeit, falls kein Redirect sofort passiert
+    setTimeout(() => statusMessage.remove(), 3000);
   });
 }
 
