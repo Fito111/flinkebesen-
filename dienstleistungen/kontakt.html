@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Flinke Besen</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { padding: 20px; max-width: 800px; margin: 0 auto; }
+        .logo-container { text-align: center; margin-bottom: 20px; }
+        .logo-image { max-width: 150px; height: auto; }
+        form { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .form-group { margin-bottom: 20px; }
+        .contact-info { display: flex; gap: 20px; }
+        .contact-info > div { flex: 1; }
+        @media (max-width: 768px) {
+            .contact-info { flex-direction: column; gap: 20px; }
+        }
+        label { display: block; margin-bottom: 5px; font-size: 16px; color: var(--text-color); }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-color); }
+        textarea { resize: vertical; min-height: 100px; }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="Images/logo.png" alt="Flinke Besen Logo" class="logo-image">
+    </div>
+    <form name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" role="form" id="contact-form" action="/danke.html">
+        <input type="hidden" name="form-name" value="kontakt" />
+        <p style="display:none">
+            <label>Bitte dieses Feld nicht ausfüllen: <input name="bot-field" autocomplete="off" /></label>
+        </p>
+        <div class="form-group">
+            <label for="name">Ihr Name</label>
+            <input type="text" id="name" name="name" placeholder="Ihr Name" required autocomplete="name" aria-label="Name">
+        </div>
+        <div class="form-group">
+            <label>Ihre Kontaktinformationen</label>
+            <div class="contact-info">
+                <div>
+                    <label for="email">E-Mail</label>
+                    <input type="email" id="email" name="email" placeholder="Ihre E-Mail" required autocomplete="email" aria-label="E-Mail">
+                </div>
+                <div>
+                    <label for="phone">Telefon</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Ihre Telefonnummer" required autocomplete="tel" aria-label="Telefonnummer" pattern="[+]?[0-9\s\-()]*">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="service_type">Art der Reinigung</label>
+            <select id="service_type" name="service_type" required aria-label="Art der Reinigung">
+                <option value="" disabled selected>Bitte auswählen</option>
+                <option value="Privat">Privat</option>
+                <option value="Geschäftlich">Geschäftlich</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="message">Ihr Anliegen</label>
+            <textarea id="message" name="message" placeholder="Ihre Nachricht (optional)" aria-label="Nachricht"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Gewünschter Termin / Zeitraum</label>
+            <div class="contact-info">
+                <div>
+                    <label for="preferred_date">Gewünschtes Datum</label>
+                    <input type="date" id="preferred_date" name="preferred_date" aria-label="Gewünschtes Datum">
+                </div>
+                <div>
+                    <label for="preferred_timeframe">Gewünschter Zeitraum (z. B. vormittags / nachmittags / ganztags)</label>
+                    <input type="text" id="preferred_timeframe" name="preferred_timeframe" placeholder="Von … bis … oder vormittags / nachmittags / ganztags" aria-label="Gewünschter Zeitraum">
+                </div>
+            </div>
+        </div>
+        <label>
+            <input type="checkbox" required aria-label="Datenschutzerklärung zustimmen">
+            Ich stimme der <a href="rechtliches/datenschutz.html" target="_blank">Datenschutzerklärung</a> zu.
+        </label>
+        <button type="submit">Angebot anfordern</button>
+    </form>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Kontakt</h4>
+                <p>Telefon: <a href="tel:+4917623852087">+49 176 23852087</a><br>
+                   E-Mail: <a href="mailto:kontakt@flinkebesen.de">kontakt@flinkebesen.de</a><br>
+                   Wiernsheim (PLZ 75446)</p>
+            </div>
+            <div class="footer-column">
+                <h4>Dienstleistungen</h4>
+                <ul>
+                    <li><a href="#services">Unsere Dienstleistungen</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="rechtliches/impressum.html" aria-label="Impressum">Impressum</a>
+            <a href="rechtliches/datenschutz.html" aria-label="Datenschutz">Datenschutz</a>
+        </div>
+        <p>© 2025 Flinke Besen. Alle Rechte vorbehalten.</p>
+    </footer>
+    <script>
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', function() {
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Senden...';
+            setTimeout(() => {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Angebot anfordern';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
