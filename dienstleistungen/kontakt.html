@@ -1,146 +1,251 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Kontakt - Flinke Besen</title>
-  <meta name="description" content="Kontaktformular - Flinke Besen, Reinigungsservice in Wiernsheim. Kostenlose Angebote per Telefon, E-Mail oder Anfrage über das Formular.">
+  <meta name="description" content="Kontaktformular - Flinke Besen, Reinigungsservice in Wiernsheim. Kostenloses Angebot anfordern.">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-  <!-- Styles -->
+  <!-- Global + dienstleistungsspezifisches CSS (Design 1:1 übernommen) -->
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/dienstleistungen.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    body { padding: 20px; max-width: 800px; margin: 0 auto; background: var(--page-bg, #f6f6f6); color: var(--text-color, #222); }
-    .logo-container { text-align:center; margin-bottom:20px; }
-    .logo-image { max-width:150px; height:auto; }
-    form { background:#fff; padding:30px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.08); }
-    .form-group { margin-bottom:20px; }
-    .contact-info { display:flex; gap:20px; }
-    .contact-info > div { flex:1; }
-    @media (max-width:768px) { .contact-info { flex-direction:column; gap:20px; } }
-    label { display:block; margin-bottom:6px; font-size:15px; }
-    input, select, textarea, button { width:100%; padding:12px; border:1px solid #ccc; border-radius:6px; font-size:16px; box-sizing:border-box; }
-    input:focus, select:focus, textarea:focus { outline:2px solid var(--accent-color, #4a90e2); }
-    textarea { min-height:120px; resize:vertical; }
-    button { cursor:pointer; background:var(--accent-color, #4a90e2); color:#fff; border:none; }
-    footer { margin-top:30px; font-size:14px; color:#555; }
-    .footer-links a { margin-right:12px; }
+    /* Zusätzliche Styles, damit Sticky-CTAs und Hero genauso aussehen wie auf der Dienstleistungsseite */
+    .logo-image { max-width: 150px; height: auto; display:block; margin: 0 auto 18px; }
+    .hero-image { width:100%; height:auto; display:block; border-radius:8px; }
+    .sticky-cta {
+      position: fixed;
+      right: 16px;
+      bottom: 90px;
+      z-index: 1200;
+      display: inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:30px;
+      background: #4a90e2;
+      color: #fff;
+      text-decoration:none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      font-weight:600;
+      font-size:14px;
+    }
+    .sticky-cta i { font-size:16px; }
+    .sticky-whatsapp {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1200;
+      display: inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:12px 14px;
+      border-radius:999px;
+      background: #25D366;
+      color: #fff;
+      text-decoration:none;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      font-weight:600;
+      font-size:14px;
+    }
+    .sticky-whatsapp i { font-size:18px; }
+
+    /* Kontakt-Section Styling (angepasst an Dienstleistungsseite) */
+    #contact { padding: 28px 0; max-width: 1100px; margin: 0 auto; }
+    .contact-content { display:flex; gap:28px; align-items:flex-start; }
+    @media (max-width: 900px) { .contact-content { flex-direction:column; } }
+    .contact-panel {
+      flex: 1 1 480px;
+      background: #fff;
+      padding: 24px;
+      border-radius:10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    .contact-panel h2 { margin-top:0; }
+    .contact-panel input, .contact-panel textarea, .contact-panel select, .contact-panel button {
+      width:100%; padding:12px; margin-top:8px; margin-bottom:14px; border:1px solid #ddd; border-radius:8px; font-size:15px; box-sizing:border-box;
+    }
+    .contact-panel label { font-weight:600; font-size:14px; display:block; margin-top:6px; }
+    .contact-panel button { background:#4a90e2; color:#fff; border:0; cursor:pointer; padding:12px 16px; border-radius:8px; font-size:16px; }
     .visually-hidden { position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; border:0; padding:0; margin:-1px; }
   </style>
 </head>
 <body>
-  <div class="logo-container">
-    <!-- Kleinschreibung 'images' konsistent; Root-bezug mit führendem / -->
+  <!-- Header / Logo (wie Dienstleistungsseite) -->
+  <header style="padding:18px 0; text-align:center;">
     <img src="/images/logo.png" alt="Flinke Besen Logo" class="logo-image">
-  </div>
+  </header>
 
-  <form name="kontakt" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="contact-form" action="/danke.html" role="form" novalidate>
-    <!-- hidden form name für Netlify -->
-    <input type="hidden" name="form-name" value="kontakt">
+  <!-- Sticky Kontakt-Button (springt zur Kontakt-Section) -->
+  <a href="#contact" class="sticky-cta" aria-label="Kostenloses Angebot anfordern">
+    <i class="fas fa-envelope"></i>
+    Angebot anfordern
+  </a>
 
-    <!-- Honeypot (für Bots) -->
-    <p class="visually-hidden" aria-hidden="true">
-      <label>Bitte dieses Feld nicht ausfüllen: <input name="bot-field" autocomplete="off"></label>
-    </p>
+  <!-- Sticky WhatsApp-Button -->
+  <a href="https://wa.me/4915566183921" class="sticky-whatsapp" target="_blank" rel="noopener" aria-label="Kontakt per WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    WhatsApp
+  </a>
 
-    <div class="form-group">
-      <label for="name">Ihr Name <span aria-hidden="true">*</span></label>
-      <input type="text" id="name" name="name" placeholder="Ihr Name" required autocomplete="name" aria-required="true">
-    </div>
+  <!-- Hero (Design 1:1 übernommen; Bild wie auf Dienstleistungsseite) -->
+  <section id="hero" style="max-width:1100px;margin:18px auto;">
+    <img src="/images/bild1.jpg" alt="Professionelle Reinigung - Flinke Besen" class="hero-image" loading="lazy">
+  </section>
 
-    <div class="form-group">
-      <label>Ihre Kontaktinformationen</label>
-      <div class="contact-info">
-        <div>
-          <label for="email">E-Mail <span aria-hidden="true">*</span></label>
-          <input type="email" id="email" name="email" placeholder="Ihre E-Mail" required autocomplete="email" aria-required="true">
+  <!-- Intro -->
+  <section id="intro" style="max-width:1100px;margin: 18px auto; text-align:center; padding: 0 16px;">
+    <h1>Kontakt & Angebot - Flinke Besen</h1>
+    <p class="value-statement">Fordern Sie ein kostenloses Angebot an — schnell, unkompliziert und auf Ihre Bedürfnisse zugeschnitten.</p>
+    <a href="#contact" class="cta-button" style="display:inline-block;margin-top:8px;padding:10px 16px;background:#4a90e2;color:#fff;border-radius:8px;text-decoration:none;">Jetzt Angebot anfordern</a>
+  </section>
+
+  <!-- Kontakt Section (Formular, im Panel-Design wie Dienstleistungsseite) -->
+  <section id="contact">
+    <div style="max-width:1100px;margin: 16px auto; padding: 0 16px;">
+      <h2 style="text-align:center;margin-bottom:8px;">Kontaktieren Sie uns</h2>
+      <p style="text-align:center;margin-top:0;margin-bottom:18px;">Schreiben Sie uns kurz Ihr Anliegen oder rufen Sie an — wir melden uns zeitnah mit einem kostenlosen Angebot.</p>
+
+      <div class="contact-content">
+        <!-- Kontakt-Formular-Panel -->
+        <div class="contact-panel" aria-labelledby="contact-form-heading">
+          <h3 id="contact-form-heading">Anfrageformular</h3>
+
+          <form name="kontakt" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="contact-form" action="/danke.html" role="form">
+            <input type="hidden" name="form-name" value="kontakt">
+            <p class="visually-hidden" aria-hidden="true">
+              <label>Bitte dieses Feld nicht ausfüllen: <input name="bot-field" autocomplete="off"></label>
+            </p>
+
+            <label for="name">Ihr Name <span aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Ihr Name" required autocomplete="name" aria-required="true">
+
+            <label for="phone">Telefon <span aria-hidden="true">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="+49 176 23852087" required autocomplete="tel" aria-required="true" pattern="[+]?[0-9\s\-()]*">
+
+            <label for="email">E-Mail <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="Ihre E-Mail" required autocomplete="email" aria-required="true">
+
+            <label for="service_type">Art der Reinigung</label>
+            <select id="service_type" name="service_type" aria-label="Art der Reinigung">
+              <option value="" selected>Bitte auswählen (optional)</option>
+              <option value="Privat">Privat</option>
+              <option value="Geschäftlich">Geschäftlich</option>
+            </select>
+
+            <label for="message">Ihre Nachricht</label>
+            <textarea id="message" name="message" placeholder="Ihre Nachricht (optional)"></textarea>
+
+            <label for="preferred_date">Gewünschtes Datum</label>
+            <input type="date" id="preferred_date" name="preferred_date">
+
+            <label for="preferred_timeframe">Gewünschter Zeitraum</label>
+            <input type="text" id="preferred_timeframe" name="preferred_timeframe" placeholder="z. B. vormittags / nachmittags / ganztags">
+
+            <label style="display:inline-flex; gap:8px; align-items:center;">
+              <input type="checkbox" id="privacy" name="privacy" value="accepted" required aria-required="true">
+              <span>Ich stimme der <a href="/rechtliches/datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a> zu.</span>
+            </label>
+
+            <div style="margin-top:12px;">
+              <button type="submit" id="submit-btn">Angebot anfordern</button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label for="phone">Telefon <span aria-hidden="true">*</span></label>
-          <input type="tel" id="phone" name="phone" placeholder="+49 176 23852087" required autocomplete="tel" aria-required="true" pattern="[+]?[0-9\s\-()]*">
+
+        <!-- Info-Panel / Kontakt-Details (rechts) -->
+        <aside style="flex: 0 0 340px;">
+          <div style="background:#fff;padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+            <h3>Kontakt & Öffnungszeiten</h3>
+            <p>Telefon: <a href="tel:+4917623852087">+49 176 23852087</a><br>
+               E-Mail: <a href="mailto:kontakt@flinkebesen.de">kontakt@flinkebesen.de</a></p>
+
+            <h4 style="margin-top:12px;">Schnellkontakt per WhatsApp</h4>
+            <p>Schreibe uns direkt über WhatsApp — schnelle Antwort bei kurzfristigen Anfragen.</p>
+            <a href="https://wa.me/4915566183921" target="_blank" rel="noopener" style="display:inline-block;padding:10px 12px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
+              <i class="fab fa-whatsapp" style="margin-right:8px;"></i> WhatsApp schreiben
+            </a>
+
+            <hr style="margin:16px 0; border:none; border-top:1px solid #eee;">
+            <h4>Service</h4>
+            <ul style="padding-left:16px; margin:0 0 8px 0;">
+              <li><a href="/#services">Unsere Dienstleistungen</a></li>
+              <li><a href="/dienstleistungen/immobilien-wohnungsreinigung.html">Immobilien- & Wohnungsreinigung</a></li>
+              <li><a href="/dienstleistungen/buero-praxisreinigung.html">Büro- & Praxisreinigung</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div> <!-- .contact-content -->
+    </div>
+  </section>
+
+  <!-- Footer (gleich wie auf der Dienstleistungsseite) -->
+  <footer style="margin-top:30px;">
+    <div style="max-width:1100px;margin: 0 auto;padding:18px;">
+      <div class="footer-content" style="display:flex;gap:24px;flex-wrap:wrap;">
+        <div class="footer-column" style="flex:1 1 220px;">
+          <h4>Kontakt</h4>
+          <p>Telefon: <a href="tel:+4917623852087">+49 176 23852087</a><br>
+             E-Mail: <a href="mailto:kontakt@flinkebesen.de">kontakt@flinkebesen.de</a><br>
+             Wiernsheim (PLZ 75446)</p>
+        </div>
+        <div class="footer-column" style="flex:1 1 220px;">
+          <h4>Dienstleistungen</h4>
+          <ul>
+            <li><a href="/#services">Unsere Dienstleistungen</a></li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="service_type">Art der Reinigung</label>
-      <select id="service_type" name="service_type" aria-label="Art der Reinigung">
-        <option value="" selected>Bitte auswählen (optional)</option>
-        <option value="Privat">Privat</option>
-        <option value="Geschäftlich">Geschäftlich</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="message">Ihr Anliegen</label>
-      <textarea id="message" name="message" placeholder="Ihre Nachricht (optional)"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="preferred_date">Gewünschtes Datum</label>
-      <input type="date" id="preferred_date" name="preferred_date">
-    </div>
-
-    <div class="form-group">
-      <label for="preferred_timeframe">Gewünschter Zeitraum</label>
-      <input type="text" id="preferred_timeframe" name="preferred_timeframe" placeholder="z. B. vormittags / nachmittags / ganztags">
-    </div>
-
-    <label>
-      <!-- name + value für Checkbox ergänzt, damit Formularwert übermittelt wird -->
-      <input type="checkbox" id="privacy" name="privacy" value="accepted" required aria-required="true">
-      Ich stimme der <a href="/rechtliches/datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a> zu.
-    </label>
-
-    <div style="margin-top:16px;">
-      <button type="submit" id="submit-btn">Angebot anfordern</button>
-    </div>
-  </form>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h4>Kontakt</h4>
-        <p>Telefon: <a href="tel:+4917623852087">+49 176 23852087</a><br>
-           E-Mail: <a href="mailto:kontakt@flinkebesen.de">kontakt@flinkebesen.de</a><br>
-           Wiernsheim (PLZ 75446)</p>
+      <div class="footer-links" style="margin-top:10px;">
+        <a href="/rechtliches/impressum.html" aria-label="Impressum">Impressum</a>
+        <a href="/rechtliches/datenschutz.html" aria-label="Datenschutz" style="margin-left:12px;">Datenschutz</a>
       </div>
-      <div class="footer-column">
-        <h4>Dienstleistungen</h4>
-        <ul>
-          <li><a href="/#services">Unsere Dienstleistungen</a></li>
-        </ul>
-      </div>
+      <p style="margin-top:12px;">© 2025 Flinke Besen. Alle Rechte vorbehalten.</p>
     </div>
-
-    <div class="footer-links">
-      <a href="/rechtliches/impressum.html" aria-label="Impressum">Impressum</a>
-      <a href="/rechtliches/datenschutz.html" aria-label="Datenschutz">Datenschutz</a>
-    </div>
-
-    <p>© 2025 Flinke Besen. Alle Rechte vorbehalten.</p>
   </footer>
 
+  <!-- Strukturierte Daten (optional, unverändert) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfessionalService",
+    "name":"Flinke Besen",
+    "telephone":"+4917623852087",
+    "email":"kontakt@flinkebesen.de",
+    "address": {
+      "@type":"PostalAddress",
+      "addressLocality":"Wiernsheim",
+      "postalCode":"75446",
+      "addressCountry":"DE"
+    },
+    "areaServed":{"@type":"City","name":"Wiernsheim"}
+  }
+  </script>
+
+  <!-- Skript: Submit-Button-Feedback -->
   <script>
     (function(){
       const form = document.getElementById('contact-form');
       if (!form) return;
       form.addEventListener('submit', function () {
-        const submitButton = document.getElementById('submit-btn');
-        if (!submitButton) return;
-        submitButton.disabled = true;
-        submitButton.textContent = 'Senden...';
-        // Button wird nach 10s wieder aktiviert, falls etwas schiefgeht (sinnvoll für Nutzerfreundlichkeit)
+        const btn = document.getElementById('submit-btn');
+        if (!btn) return;
+        btn.disabled = true;
+        btn.textContent = 'Senden...';
+        // Fallback: reaktiviere nach 10s falls Redirect/Netlify nicht funktioniert
         setTimeout(() => {
-          if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Angebot anfordern';
-          }
+          if (btn) { btn.disabled = false; btn.textContent = 'Angebot anfordern'; }
         }, 10000);
       });
     })();
   </script>
+
+  <!-- globale + dienstleistungsspezifische scripts -->
+  <script src="/script.js"></script>
+  <script src="/dienstleistungen.js"></script>
 </body>
 </html>
