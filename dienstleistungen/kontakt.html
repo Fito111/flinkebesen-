@@ -13,26 +13,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* Zusätzliche Styles, damit Sticky-CTAs und Hero genauso aussehen wie auf der Dienstleistungsseite */
+    /* Zusätzliche Styles, nur für Sticky WhatsApp-Button */
     .logo-image { max-width: 150px; height: auto; display:block; margin: 0 auto 18px; }
-    .sticky-cta {
-      position: fixed;
-      right: 16px;
-      bottom: 90px;
-      z-index: 1200;
-      display: inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:10px 14px;
-      border-radius:30px;
-      background: #4a90e2;
-      color: #fff;
-      text-decoration:none;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-      font-weight:600;
-      font-size:14px;
-    }
-    .sticky-cta i { font-size:16px; }
     .sticky-whatsapp {
       position: fixed;
       right: 16px;
@@ -78,12 +60,6 @@
     <img src="/images/logo.png" alt="Flinke Besen Logo" class="logo-image">
   </header>
 
-  <!-- Sticky Kontakt-Button (springt zur Kontakt-Section) -->
-  <a href="#contact" class="sticky-cta" aria-label="Kostenloses Angebot anfordern">
-    <i class="fas fa-envelope"></i>
-    Angebot anfordern
-  </a>
-
   <!-- Sticky WhatsApp-Button -->
   <a href="https://wa.me/4915566183921" class="sticky-whatsapp" target="_blank" rel="noopener" aria-label="Kontakt per WhatsApp">
     <i class="fab fa-whatsapp"></i>
@@ -108,7 +84,7 @@
         <div class="contact-panel" aria-labelledby="contact-form-heading">
           <h3 id="contact-form-heading">Anfrageformular</h3>
 
-          <form name="kontakt" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="contact-form" action="/danke.html" role="form">
+          <form name="kontakt" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="contact-form" action="/danke.html" role="form" enctype="multipart/form-data">
             <input type="hidden" name="form-name" value="kontakt">
             <p class="visually-hidden" aria-hidden="true">
               <label>Bitte dieses Feld nicht ausfüllen: <input name="bot-field" autocomplete="off"></label>
@@ -117,11 +93,8 @@
             <label for="name">Ihr Name <span aria-hidden="true">*</span></label>
             <input type="text" id="name" name="name" placeholder="Ihr Name" required autocomplete="name" aria-required="true">
 
-            <label for="phone">Telefon <span aria-hidden="true">*</span></label>
-            <input type="tel" id="phone" name="phone" placeholder="+49 176 23852087" required autocomplete="tel" aria-required="true" pattern="[+]?[0-9\s\-()]*">
-
-            <label for="email">E-Mail <span aria-hidden="true">*</span></label>
-            <input type="email" id="email" name="email" placeholder="Ihre E-Mail" required autocomplete="email" aria-required="true">
+            <label for="contact_details">Ihre Kontaktdaten <span aria-hidden="true">*</span></label>
+            <input type="text" id="contact_details" name="contact_details" placeholder="Telefon oder E-Mail" required autocomplete="tel email" aria-required="true">
 
             <label for="service_type">Art der Reinigung</label>
             <select id="service_type" name="service_type" aria-label="Art der Reinigung">
@@ -130,14 +103,14 @@
               <option value="Geschäftlich">Geschäftlich</option>
             </select>
 
-            <label for="message">Ihre Nachricht</label>
-            <textarea id="message" name="message" placeholder="Ihre Nachricht (optional)"></textarea>
+            <label for="message">Beschreibung der Reinigung</label>
+            <textarea id="message" name="message" placeholder="Beschreiben Sie, was gereinigt werden soll (optional)"></textarea>
 
             <label for="preferred_date">Gewünschtes Datum</label>
             <input type="date" id="preferred_date" name="preferred_date">
 
-            <label for="preferred_timeframe">Gewünschter Zeitraum</label>
-            <input type="text" id="preferred_timeframe" name="preferred_timeframe" placeholder="z. B. vormittags / nachmittags / ganztags">
+            <label for="images">Bilder der zu reinigenden Bereiche</label>
+            <input type="file" id="images" name="images" accept="image/*" multiple aria-label="Bilder hochladen (optional)">
 
             <label style="display:inline-flex; gap:8px; align-items:center;">
               <input type="checkbox" id="privacy" name="privacy" value="accepted" required aria-required="true">
