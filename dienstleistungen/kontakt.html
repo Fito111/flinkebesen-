@@ -3,19 +3,232 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unser Portfolio</title>
+  <meta name="description" content="Portfolio von Flinke Besen – Einblicke in unsere professionellen Reinigungsarbeiten in Wiernsheim und Umgebung.">
+  <meta name="keywords" content="Portfolio Reinigung, Flinke Besen, Reinigungsbeispiele Wiernsheim">
+  <title>Unser Portfolio – Flinke Besen</title>
+
+  <!-- globales CSS (root) -->
+  <link rel="stylesheet" href="../styles.css">
+  <!-- dienstleistungsspezifisches CSS -->
+  <link rel="stylesheet" href="../dienstleistungen/dienstleistungen.css">
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body { margin:0; padding:20px; background:#f8f8f8; font-family: system-ui, sans-serif; }
-    img { width:100%; max-width:800px; margin:20px auto; display:block; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-    h1 { text-align:center; color:#222; }
+    /* Portfolio-spezifische Styles */
+    #portfolio-grid {
+      padding: 40px 20px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    #portfolio-grid h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #portfolio-grid .section-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 36px;
+      font-size: 1rem;
+    }
+
+    .portfolio-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .portfolio-item {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .portfolio-item-caption {
+      padding: 14px 16px;
+    }
+
+    .portfolio-item-caption p {
+      margin: 0;
+      color: #555;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
-  <h1>Unser Unternehmensportfolio</h1>
-  
-  <img src="bild10.png" alt="Projekt 1">
-  <img src="bild11.png" alt="Projekt 2">
-  <img src="bild12.png" alt="Projekt 3">
-  <img src="bild13.png" alt="Projekt 4">
+
+  <!-- Header -->
+  <header>
+    <img src="../images/logo.png" alt="Flinke Besen Logo" class="logo-image">
+  </header>
+
+  <!-- Sticky Kontakt-Button -->
+  <a href="#contact" class="sticky-cta" aria-label="Kostenloses Angebot anfordern">
+    <i class="fas fa-envelope"></i> Angebot anfordern
+  </a>
+
+  <!-- Sticky WhatsApp-Button -->
+  <a href="https://wa.me/4915566183921" class="sticky-whatsapp" target="_blank" aria-label="Kontaktieren Sie uns über WhatsApp">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+  </a>
+
+  <!-- Hero Section -->
+  <section id="hero" class="animate">
+    <img src="../images/bild1.jpg" alt="Portfolio – Flinke Besen Reinigungsarbeiten" class="hero-image" loading="lazy">
+  </section>
+
+  <!-- Titel und Value-Statement -->
+  <section id="intro" class="animate">
+    <h1>Unser Portfolio</h1>
+    <p class="value-statement">Überzeugen Sie sich selbst – hier finden Sie Einblicke in unsere professionellen Reinigungsarbeiten.</p>
+    <a href="#contact" class="cta-button">Jetzt Angebot anfordern</a>
+  </section>
+
+  <!-- Kurzbeschreibung -->
+  <section id="short-description" class="animate">
+    <p>Von der Büroreinigung über Wohnungsreinigung bis hin zur Treppenhausreinigung – unsere Arbeit spricht für sich. Schauen Sie sich unsere abgeschlossenen Projekte an und lassen Sie sich von unserer Qualität überzeugen.</p>
+  </section>
+
+  <!-- Portfolio-Galerie -->
+  <section id="portfolio-grid">
+    <h2 class="animate">Unsere Arbeiten im Überblick</h2>
+    <p class="section-subtitle animate">Ausgewählte Beispiele aus unserem Leistungsbereich</p>
+
+    <div class="portfolio-gallery">
+      <div class="portfolio-item animate">
+        <img src="../images/bild1.jpg" alt="Reinigungsprojekt 1 – Flinke Besen" loading="lazy">
+        <div class="portfolio-item-caption">
+          <p>Professionelle Reinigung – Projekt 1</p>
+        </div>
+      </div>
+
+      <div class="portfolio-item animate">
+        <img src="../images/bild2.jpg" alt="Reinigungsprojekt 2 – Flinke Besen" loading="lazy">
+        <div class="portfolio-item-caption">
+          <p>Professionelle Reinigung – Projekt 2</p>
+        </div>
+      </div>
+
+      <div class="portfolio-item animate">
+        <img src="../images/bild3.jpg" alt="Reinigungsprojekt 3 – Flinke Besen" loading="lazy">
+        <div class="portfolio-item-caption">
+          <p>Professionelle Reinigung – Projekt 3</p>
+        </div>
+      </div>
+
+      <div class="portfolio-item animate">
+        <img src="../images/bild4.jpg" alt="Reinigungsprojekt 4 – Flinke Besen" loading="lazy">
+        <div class="portfolio-item-caption">
+          <p>Professionelle Reinigung – Projekt 4</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt Section -->
+  <section id="contact">
+    <h2 class="animate">Kontaktieren Sie uns</h2>
+    <p class="animate">Fordern Sie ein kostenloses Angebot an und profitieren Sie von einer auf Ihre Bedürfnisse abgestimmten Reinigungslösung.</p>
+    <div class="contact-content">
+      <form name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="animate" role="form" id="contact-form" action="/danke.html">
+        <input type="hidden" name="form-name" value="kontakt" />
+        <p style="display:none">
+          <label>Bitte dieses Feld nicht ausfüllen: <input name="bot-field" /></label>
+        </p>
+        <input type="text" placeholder="Ihr Name" id="name" name="name" aria-label="Name" required>
+        <input type="tel" placeholder="Ihre Telefonnummer" id="phone" name="phone" aria-label="Telefonnummer" required>
+        <input type="email" placeholder="Ihre E-Mail" id="email" name="email" aria-label="E-Mail" required>
+        <textarea placeholder="Ihre Nachricht" id="message" name="message" aria-label="Nachricht"></textarea>
+        <label>
+          <input type="checkbox" required>
+          Ich stimme der <a href="../rechtliches/datenschutz.html" target="_blank">Datenschutzerklärung</a> zu.
+        </label>
+        <button type="submit">Angebot anfordern</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Weitere Dienstleistungen -->
+  <section id="other-services">
+    <h2 class="animate">Unsere Dienstleistungen</h2>
+    <div class="services-list">
+      <a href="../dienstleistungen/buero.html" class="service-card animate" data-delay="0">
+        <img src="../images/bild2.jpg" alt="Büro- & Praxisreinigung in Wiernsheim" loading="lazy">
+        <h3>Büro- & Praxisreinigung</h3>
+        <p>Professionelle Reinigung für Ihren Arbeitsplatz – für optimale Hygiene, Produktivität und ein positives Image.</p>
+      </a>
+      <a href="../dienstleistungen/immobilien.html" class="service-card animate" data-delay="100">
+        <img src="../images/bild1.jpg" alt="Immobilien- & Wohnungsreinigung in Wiernsheim" loading="lazy">
+        <h3>Immobilien- & Wohnungsreinigung</h3>
+        <p>Gründliche Pflege für Wohnungen und Häuser – von regelmäßiger Reinigung bis hin zur makellosen Endreinigung.</p>
+      </a>
+      <a href="../dienstleistungen/spezialreinigung.html" class="service-card animate" data-delay="200">
+        <img src="../images/bild3.jpg" alt="Treppenhausreinigung in Wiernsheim" loading="lazy">
+        <h3>Treppenhausreinigung</h3>
+        <p>Spezialisierte Reinigungslösungen für anspruchsvolle Aufgaben – für makellose Ergebnisse.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Kontakt</h4>
+        <p>Telefon: <a href="tel:+4917623852087">+49 176 23852087</a><br>
+           E-Mail: <a href="mailto:kontakt@flinkebesen.de">kontakt@flinkebesen.de</a><br>
+           Wiernsheim (PLZ 75446)</p>
+      </div>
+      <div class="footer-column">
+        <h4>Dienstleistungen</h4>
+        <ul>
+          <li><a href="../#services">Unsere Dienstleistungen</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="../rechtliches/impressum.html" aria-label="Impressum">Impressum</a>
+      <a href="../rechtliches/datenschutz.html" aria-label="Datenschutz">Datenschutz</a>
+    </div>
+    <p>© 2025 Flinke Besen. Alle Rechte vorbehalten.</p>
+  </footer>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Flinke Besen",
+    "telephone": "+4917623852087",
+    "email": "kontakt@flinkebesen.de",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Wiernsheim",
+      "postalCode": "75446",
+      "addressCountry": "DE"
+    }
+  }
+  </script>
+
+  <!-- globale + seitenspezifische Scripts -->
+  <script src="../script.js"></script>
+  <script src="../dienstleistungen/dienstleistungen.js"></script>
+
 </body>
 </html>
